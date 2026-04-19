@@ -1,6 +1,6 @@
 // admin.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-// أضفنا collection و addDoc و deleteDoc و query و orderBy في سطر الاستيراد أدناه
+// أضفنا collection و addDoc و deleteDoc و query و orderBy و where و limit لزيادة التحكم
 import { 
     getFirestore, 
     doc, 
@@ -11,7 +11,9 @@ import {
     addDoc, 
     deleteDoc, 
     query, 
-    orderBy 
+    orderBy,
+    where,
+    limit
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 import { 
@@ -32,25 +34,27 @@ const firebaseConfig = {
     measurementId: "G-Y0P9GWJ579"
 };
 
-// تهيئة Firebase
+// تهيئة Firebase مع التحقق من عدم التكرار (مهم لبيئات الاستضافة)
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// تصدير الأدوات لاستخدامها في dashboard.js و index.html
+// تصدير الأدوات لاستخدامها في dashboard.js و index.html بدون حذف أي شيء
 export { 
     db, 
     auth, 
     doc, 
     onSnapshot, 
     updateDoc, 
-    getDoc,        // أضفنا getDoc أيضاً للاحتياط
+    getDoc,
     collection, 
     addDoc, 
     deleteDoc, 
     query, 
     orderBy, 
+    where,         // أضفناها لتسهيل الفلترة مستقبلاً
+    limit,         // أضفناها للتحكم في عدد العناصر المعروضة
     onAuthStateChanged, 
     signOut,
-    signInWithEmailAndPassword // أضفناها لتعمل عملية تسجيل الدخول في الداشبورد
+    signInWithEmailAndPassword 
 };

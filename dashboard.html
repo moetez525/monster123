@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | Real Life CFW</title>
+    
+    <link rel="stylesheet" href="website-color.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-red: #ff0000;
+            --dark-red: #b30000;
+            --black: #0a0a0a;
+            --card-bg: #161616;
+            --medium-gray: #252525;
+            --light-gray: #333333;
+            --text-gray: #aaaaaa;
+            --white: #ffffff;
+        }
+
+        body { 
+            background: var(--black); 
+            font-family: 'Tajawal', sans-serif; 
+            color: var(--white); 
+            margin: 0; 
+            display: flex; 
+            min-height: 100vh;
+        }
+
+        /* القائمة الجانبية */
+        .sidebar { 
+            width: 260px; 
+            background: var(--card-bg); 
+            height: 100vh; 
+            padding: 25px; 
+            border-left: 1px solid var(--light-gray); 
+            position: fixed; 
+            right: 0; 
+            top: 0; 
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content { 
+            flex: 1; 
+            margin-right: 260px; 
+            padding: 40px; 
+            background: var(--black); 
+        }
+
+        /* البطاقات */
+        .section-card { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 15px; 
+            margin-bottom: 30px; 
+            border-right: 5px solid var(--primary-red); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+        }
+
+        h1 { color: var(--white); margin-bottom: 30px; font-size: 2rem; border-bottom: 2px solid var(--medium-gray); padding-bottom: 15px; }
+        h2 { margin-top: 0; color: var(--primary-red); font-size: 1.3rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+
+        /* الحقول */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 10px; color: var(--text-gray); font-size: 0.9rem; }
+        
+        input, textarea, select { 
+            width: 100%; 
+            padding: 12px; 
+            background: var(--medium-gray); 
+            border: 1px solid var(--light-gray); 
+            color: white; 
+            border-radius: 8px; 
+            font-family: inherit; 
+            font-size: 14px; 
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus { border-color: var(--primary-red); outline: none; background: #2a2a2a; }
+
+        /* الأزرار */
+        .btn-save { 
+            background: var(--primary-red); 
+            color: white; 
+            border: none; 
+            padding: 12px 30px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 1rem; 
+            transition: 0.3s; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-top: 10px;
+        }
+
+        .btn-save:hover { background: var(--dark-red); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3); }
+
+        .logout-btn { 
+            background: #222; 
+            border: 1px solid #444; 
+            color: #ff4d4d; 
+            padding: 12px; 
+            width: 100%; 
+            cursor: pointer; 
+            margin-top: auto; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            transition: 0.3s; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logout-btn:hover { background: #ff4d4d; color: white; }
+
+        /* للهواتف */
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; border: none; border-bottom: 1px solid var(--light-gray); }
+            body { flex-direction: column; }
+            .main-content { margin-right: 0; padding: 20px; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body id="adminBody" style="display: none;">
+
+    <div class="sidebar">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="logo.png" alt="Logo" style="max-width: 100px; filter: drop-shadow(0 0 5px var(--primary-red));">
+            <h2 style="color: white; margin-top: 15px;">إدارة ريل لايف</h2>
+            <p style="color: var(--text-gray); font-size: 0.8rem;">نظام التحكم الشامل</p>
+        </div>
+        
+        <nav>
+            </nav>
+
+        <button id="logoutBtn" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+        </button>
+    </div>
+
+    <div class="main-content">
+        <h1><i class="fas fa-sliders-h"></i> إعدادات الموقع المباشرة</h1>
+        <div class="section-card">
+            <h2><i class="fas fa-user-shield"></i> نظام التقديمات (فتح/إغلاق)</h2>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>حالة تقديم الإدارة</label>
+                    <select id="adminApp">
+                        <option value="open">مفتوح (Open)</option>
+                        <option value="closed">مغلق (Closed)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>حالة النقل الإداري</label>
+                    <select id="transferApp">
+                        <option value="open">مفتوح (Open)</option>
+                        <option value="closed">مغلق (Closed)</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn-save" id="saveStatus">
+                <i class="fas fa-sync-alt"></i> تحديث الحالة المباشرة
+            </button>
+        </div>
+
+        <div class="section-card">
+            <h2><i class="fas fa-gavel"></i> إدارة قوانين السيرفر</h2>
+            <p style="color: var(--text-gray); font-size: 0.85rem; margin-bottom: 20px; background: #222; padding: 10px; border-radius: 5px; border-right: 3px solid gold;">
+                <i class="fas fa-info-circle"></i> تنبيه: اكتب كل قانون في سطر جديد ليظهر بنظام النقاط في الموقع.
+            </p>
+            
+            <div class="grid-2">
+                <div class="input-group">
+                    <label><i class="fas fa-list"></i> 1. القوانين العامة</label>
+                    <textarea id="rulesGeneral" rows="8" placeholder="اكتب القوانين هنا..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-shield-alt"></i> 2. المناطق الآمنة</label>
+                    <textarea id="rulesGreenZone" rows="8" placeholder="اكتب المناطق هنا..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-skull"></i> 3. قوانين الإجرام</label>
+                    <textarea id="rulesHeist" rows="8" placeholder="اكتب قوانين الإجرام..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-utensils"></i> 4. قوانين المطاعم</label>
+                    <textarea id="rulesShootout" rows="8" placeholder="اكتب قوانين المطاعم..."></textarea>
+                </div>
+            </div>
+            <button class="btn-save" id="saveRules">
+                <i class="fas fa-check-double"></i> حفظ ونشر كافة القوانين
+            </button>
+        </div>
+
+        <div class="section-card">
+            <h2><i class="fas fa-users-cog"></i> إدارة فريق الإدارة</h2>
+            <p style="color: var(--text-gray); font-size: 0.85rem; margin-bottom: 20px;">* يمكنك إضافة أعضاء جدد أو حذف الحاليين.</p>
+            
+            <div class="grid-2" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                <div class="input-group">
+                    <label>اسم العضو</label>
+                    <input type="text" id="newMemberName" placeholder="مثال: RL | Professor">
+                </div>
+                <div class="input-group">
+                    <label>الرتبة / الدور</label>
+                    <input type="text" id="newMemberRank" placeholder="مثال: Owner أو Web Developer">
+                </div>
+                <div class="input-group">
+                    <label>رابط الصورة (URL)</label>
+                    <input type="text" id="newMemberPhoto" placeholder="مثال: logo.png أو رابط مباشر">
+                </div>
+                <div class="input-group">
+                    <label>الفئة</label>
+                    <select id="newMemberCategory">
+                        <option value="owners">فريق الإدارة (العليا)</option>
+                        <option value="ceos">فريق المؤسسين (CEO)</option>
+                        <option value="devs">فريق البرمجة</option>
+                    </select>
+                </div>
+                <button class="btn-save" id="addMemberBtn"><i class="fas fa-plus"></i> إضافة عضو جديد</button>
+            </div>
+
+            <hr style="border-color: #333; margin: 20px 0;">
+
+            <div id="membersListContainer" class="grid-2">
+                </div>
+        </div>
+    </div>
+
+    <script type="module" src="dashboard.js"></script>
+</body>
+</html>

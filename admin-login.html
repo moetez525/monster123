@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تسجيل دخول الإدارة | Real Life</title>
+    <style>
+        :root { --primary: #ff0000; --bg: #0a0a0a; --card: #1a1a1a; }
+        body { background: var(--bg); color: white; font-family: 'Tajawal', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background: var(--card); padding: 40px; border-radius: 15px; border: 1px solid #333; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { color: var(--primary); margin-bottom: 25px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; box-sizing: border-box; }
+        input:focus { border-color: var(--primary); outline: none; }
+        button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #cc0000; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>إدارة ريل لايف</h2>
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="pass" placeholder="كلمة المرور">
+        <button id="loginBtn">دخول النظام</button>
+    </div>
+
+    <script type="module">
+        import { auth, signInWithEmailAndPassword } from './admin.js';
+        document.getElementById('loginBtn').onclick = () => {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            signInWithEmailAndPassword(auth, email, pass)
+                .then(() => window.location.href = 'dashboard.html')
+                .catch(() => alert("خطأ: تأكد من تفعيل Auth في Firebase ومن صحة البيانات"));
+        };
+    </script>
+</body>
+</html>

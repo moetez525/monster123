@@ -1,10 +1,100 @@
 import { db, auth, doc, onSnapshot, updateDoc, collection, addDoc, deleteDoc, query, orderBy, onAuthStateChanged, signOut } from './admin.js';
 
+// --- نظام الإشعارات (Toast) ---
+const toastStyle = document.createElement('style');
+toastStyle.textContent = `
+    .toast-container {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 9999;
+        pointer-events: none;
+    }
+    .toast-notification {
+        background: rgba(15, 22, 41, 0.95);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(58, 82, 115, 0.4);
+        border-right: 4px solid #10b981;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        transform: translateX(120%);
+        opacity: 0;
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease;
+        font-family: 'Tajawal', sans-serif;
+        font-weight: 600;
+        min-width: 280px;
+    }
+    .toast-notification.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    .toast-notification i {
+        font-size: 1.5rem;
+    }
+    .toast-success { border-right-color: #10b981; }
+    .toast-success i { color: #10b981; }
+    
+    .toast-error { border-right-color: #ef4444; }
+    .toast-error i { color: #ef4444; }
+    
+    .toast-warning { border-right-color: #f59e0b; }
+    .toast-warning i { color: #f59e0b; }
+`;
+document.head.appendChild(toastStyle);
+
+const toastContainer = document.createElement('div');
+toastContainer.className = 'toast-container';
+
+// Fixed: Immediately append or ensure it appends if body is ready
+if (document.body) {
+    document.body.appendChild(toastContainer);
+} else {
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.appendChild(toastContainer);
+    });
+}
+
+window.showToast = function(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast-notification toast-${type}`;
+    
+    let icon = 'fa-check-circle';
+    if(type === 'error') icon = 'fa-times-circle';
+    if(type === 'warning') icon = 'fa-exclamation-triangle';
+
+    toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+    
+    // Safety check: always ensure container is in DOM before appending toast
+    if(!document.body.contains(toastContainer)) {
+        document.body.appendChild(toastContainer);
+    }
+    
+    toastContainer.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        setTimeout(() => toast.classList.add('show'), 10);
+    });
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500);
+    }, 3500);
+}
+
 // مرجع الوثيقة في Firebase
 const configRef = doc(db, "settings", "siteConfig");
 const teamCollection = collection(db, "teamMembers");
 
-// 1. حماية اللوحة: التحقق الصارم من تسجيل الدخول وإظهار المحتوى
+// 1. حماية اللوحة
 onAuthStateChanged(auth, (user) => {
     const adminBody = document.getElementById('adminBody');
     if (user) {
@@ -41,36 +131,32 @@ onSnapshot(configRef, (snap) => {
     }
 });
 
-// 3. وظائف أزرار الحفظ (ربط الأحداث برمجياً)
-
+// 3. وظائف أزرار الحفظ
 const setupClick = (id, callback) => {
     const btn = document.getElementById(id);
     if (btn) btn.onclick = callback;
 };
 
-// حفظ الروابط
 setupClick('saveGeneral', async () => {
     try {
         await updateDoc(configRef, {
             discordLink: document.getElementById('discordLink').value,
             logoUrl: document.getElementById('logoUrl').value
         });
-        alert("تم حفظ الروابط والصور بنجاح ✅");
-    } catch (e) { alert("خطأ في الحفظ! تأكد من صلاحيات Firebase"); }
+        showToast("تم حفظ الروابط والصور بنجاح", "success");
+    } catch (e) { showToast("خطأ في الحفظ!", "error"); }
 });
 
-// تحديث حالة التقديمات
 setupClick('saveStatus', async () => {
     try {
         await updateDoc(configRef, {
             adminApp: document.getElementById('adminApp').value,
             transferApp: document.getElementById('transferApp').value
         });
-        alert("تم تحديث حالة التقديمات (مفتوح/مغلق) بنجاح ✅");
-    } catch (e) { alert("حدث خطأ أثناء التحديث"); }
+        showToast("تم تحديث حالة التقديمات بنجاح", "success");
+    } catch (e) { showToast("حدث خطأ أثناء التحديث", "error"); }
 });
 
-// حفظ القوانين
 setupClick('saveRules', async () => {
     try {
         await updateDoc(configRef, {
@@ -79,41 +165,43 @@ setupClick('saveRules', async () => {
             rulesHeist: document.getElementById('rulesHeist').value,
             rulesShootout: document.getElementById('rulesShootout').value
         });
-        alert("تم تحديث كافة القوانين ونشرها في الموقع الآن ✅");
-    } catch (e) { alert("فشل تحديث القوانين"); }
+        showToast("تم تحديث كافة القوانين بنجاح", "success");
+    } catch (e) { showToast("فشل تحديث القوانين", "error"); }
 });
 
-// 4. تسجيل الخروج
 setupClick('logoutBtn', () => {
     signOut(auth).then(() => {
         window.location.replace('admin-login.html');
     });
 });
 
-// --- وظيفة إضافة عضو جديد للطاقم ---
+// --- إضافة عضو جديد ---
 setupClick('addMemberBtn', async () => {
-    const name = document.getElementById('newMemberName').value;
-    const rank = document.getElementById('newMemberRank').value;
-    const photo = document.getElementById('newMemberPhoto').value;
-    const category = document.getElementById('newMemberCategory').value;
+    const nameEl = document.getElementById('newMemberName');
+    const rankEl = document.getElementById('newMemberRank');
+    const photoEl = document.getElementById('newMemberPhoto');
+    const categoryEl = document.getElementById('newMemberCategory');
 
-    if(name && rank && photo) {
+    if(nameEl.value && rankEl.value && photoEl.value) {
         try {
             await addDoc(teamCollection, {
-                name, rank, photo, category,
+                name: nameEl.value,
+                rank: rankEl.value,
+                photo: photoEl.value,
+                category: categoryEl.value,
                 createdAt: Date.now()
             });
-            alert("تم إضافة العضو إلى الطاقم بنجاح! ✅");
-            document.getElementById('newMemberName').value = '';
-            document.getElementById('newMemberRank').value = '';
-            document.getElementById('newMemberPhoto').value = '';
-        } catch (e) { alert("حدث خطأ أثناء الإضافة."); }
+            showToast("تم إضافة العضو بنجاح!", "success");
+            nameEl.value = '';
+            rankEl.value = '';
+            photoEl.value = '';
+        } catch (e) { showToast("حدث خطأ أثناء الإضافة.", "error"); }
     } else {
-        alert("يرجى إكمال جميع بيانات العضو.");
+        showToast("يرجى إكمال جميع بيانات العضو.", "warning");
     }
 });
 
-// --- عرض قائمة الأعضاء وإدارة الحذف ---
+// --- عرض قائمة الأعضاء ---
 onSnapshot(query(teamCollection, orderBy("createdAt", "desc")), (snap) => {
     const container = document.getElementById('membersListContainer');
     if(!container) return;
@@ -123,7 +211,6 @@ onSnapshot(query(teamCollection, orderBy("createdAt", "desc")), (snap) => {
     snap.forEach((memberDoc) => {
         const member = memberDoc.data();
         const div = document.createElement('div');
-        div.className = "member-item"; // تأكد من استخدام كلاس للتنسيق
         div.style = "background: #222; padding: 15px; border-radius: 10px; border: 1px solid #333; display: flex; align-items: center; gap: 15px; margin-bottom: 10px;";
         
         div.innerHTML = `
@@ -139,18 +226,20 @@ onSnapshot(query(teamCollection, orderBy("createdAt", "desc")), (snap) => {
         container.appendChild(div);
     });
 
-    // ربط أزرار الحذف برمجياً بعد رندر العناصر
     document.querySelectorAll('.delete-member-btn').forEach(btn => {
         btn.onclick = () => deleteMemberAction(btn.getAttribute('data-id'));
     });
 });
 
-// دالة الحذف (تم تغيير الاسم لتجنب التعارض)
 async function deleteMemberAction(id) {
     if(confirm("هل أنت متأكد من رغبتك في إزالة هذا العضو من الطاقم؟")) {
         try {
+            // Correct Firebase v9+ deletion syntax
             await deleteDoc(doc(db, "teamMembers", id));
-            alert("تم حذف العضو بنجاح.");
-        } catch (e) { alert("حدث خطأ أثناء محاولة الحذف."); }
+            showToast("تم حذف العضو بنجاح.", "success");
+        } catch (e) { 
+            console.error(e);
+            showToast("حدث خطأ أثناء محاولة الحذف.", "error"); 
+        }
     }
 }

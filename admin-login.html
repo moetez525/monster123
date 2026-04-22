@@ -1,36 +1,555 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل دخول الإدارة | Real Life</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
     <style>
-        :root { --primary: #ff0000; --bg: #0a0a0a; --card: #1a1a1a; }
-        body { background: var(--bg); color: white; font-family: 'Tajawal', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-card { background: var(--card); padding: 40px; border-radius: 15px; border: 1px solid #333; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h2 { color: var(--primary); margin-bottom: 25px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; box-sizing: border-box; }
-        input:focus { border-color: var(--primary); outline: none; }
-        button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        button:hover { background: #cc0000; }
+        :root {
+            --primary-red: #dc2626;
+            --primary-red-light: #ef4444;
+            --dark-red: #991b1b;
+            --black: #0a0e27;
+            --card-bg: rgba(15, 22, 41, 0.85);
+            --input-bg: rgba(42, 58, 89, 0.5);
+            --input-border: rgba(58, 82, 115, 0.5);
+            --text-gray: #8b94a8;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #0d1219 40%, #111827 100%);
+            color: var(--white);
+            font-family: 'Tajawal', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* خلفية متحركة */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.04) 0%, transparent 50%);
+            animation: bgFloat 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(2%, -2%) rotate(1deg); }
+            50% { transform: translate(-1%, 1%) rotate(-0.5deg); }
+            75% { transform: translate(1%, 2%) rotate(0.5deg); }
+        }
+
+        /* جزيئات عائمة */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* بطاقة تسجيل الدخول */
+        .login-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 440px;
+            animation: cardAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 50px 40px 40px;
+            border-radius: 28px;
+            border: 1px solid rgba(58, 82, 115, 0.3);
+            text-align: center;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, transparent 60%);
+            border-radius: 0 28px 0 200px;
+            pointer-events: none;
+        }
+
+        .login-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(315deg, rgba(59, 130, 246, 0.06) 0%, transparent 60%);
+            border-radius: 0 150px 0 28px;
+            pointer-events: none;
+        }
+
+        /* الشعار */
+        .login-logo {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .login-logo img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.4));
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.4)); }
+            50% { filter: drop-shadow(0 0 35px rgba(220, 38, 38, 0.6)); }
+        }
+
+        .login-title {
+            margin-bottom: 8px;
+        }
+
+        .login-title h2 {
+            color: var(--white);
+            font-size: 1.7rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin: 0;
+        }
+
+        .login-title h2 span {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-subtitle {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+
+        /* حقول الإدخال */
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-wrapper > i {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            z-index: 2;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 16px 48px 16px 18px;
+            background: var(--input-bg);
+            border: 1.5px solid var(--input-border);
+            color: var(--white);
+            border-radius: 14px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+            position: relative;
+        }
+
+        .input-wrapper input::placeholder {
+            color: rgba(139, 148, 168, 0.6);
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--primary-red);
+            background: rgba(50, 70, 110, 0.6);
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .input-wrapper input:focus + i,
+        .input-wrapper:focus-within > i,
+        .input-wrapper:focus-within .toggle-password {
+            color: var(--primary-red-light);
+        }
+
+        /* زر تبديل كلمة المرور */
+        .toggle-password {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 6px;
+            transition: color 0.3s ease;
+            z-index: 3;
+            line-height: 1;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary-red-light);
+        }
+
+        /* حقل كلمة المرور - مساحة إضافية للأيقونة */
+        .input-wrapper.has-toggle input {
+            padding-left: 48px;
+        }
+
+        /* زر الدخول */
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 28px;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(220, 38, 38, 0.45);
+            background: linear-gradient(135deg, var(--primary-red-light) 0%, var(--primary-red) 100%);
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .login-btn.loading {
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .login-btn .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .login-btn.loading .spinner {
+            display: block;
+        }
+
+        .login-btn.loading .btn-text {
+            display: none;
+        }
+
+        .login-btn.loading .btn-icon {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* رسالة الخطأ */
+        .error-message {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 16px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            animation: shakeError 0.4s ease;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        @keyframes shakeError {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            50% { transform: translateX(8px); }
+            75% { transform: translateX(-4px); }
+        }
+
+        /* تذييل */
+        .login-footer {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(58, 82, 115, 0.2);
+            color: var(--text-gray);
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .login-footer i {
+            color: var(--primary-red);
+            font-size: 0.7rem;
+        }
+
+        /* للهواتف */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 40px 28px 32px;
+                border-radius: 22px;
+            }
+
+            .login-title h2 {
+                font-size: 1.4rem;
+            }
+
+            .login-logo img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        /* تحسين السكرولبار */
+        ::-webkit-scrollbar { width: 0; }
     </style>
 </head>
+
 <body>
-    <div class="login-card">
-        <h2>إدارة ريل لايف</h2>
-        <input type="email" id="email" placeholder="البريد الإلكتروني">
-        <input type="password" id="pass" placeholder="كلمة المرور">
-        <button id="loginBtn">دخول النظام</button>
+    <!-- الجزيئات العائمة -->
+    <div class="particles" id="particles"></div>
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="logo.png" alt="Real Life Logo">
+            </div>
+
+            <div class="login-title">
+                <h2>إدارة <span>ريل لايف</span></h2>
+            </div>
+            <p class="login-subtitle">قم بتسجيل الدخول للوصول إلى لوحة التحكم</p>
+
+            <form id="loginForm" onsubmit="return false;">
+                <div class="input-wrapper">
+                    <input type="email" id="email" placeholder="البريد الإلكتروني" autocomplete="email" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+
+                <div class="input-wrapper has-toggle">
+                    <input type="password" id="pass" placeholder="كلمة المرور" autocomplete="current-password" required>
+                    <i class="fas fa-lock"></i>
+                    <button type="button" class="toggle-password" id="togglePass" tabindex="-1">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-icon"><i class="fas fa-sign-in-alt"></i></span>
+                    <span class="btn-text">دخول النظام</span>
+                    <div class="spinner"></div>
+                </button>
+
+                <div class="error-message" id="errorMsg">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="errorText">خطأ في البيانات</span>
+                </div>
+            </form>
+
+            <div class="login-footer">
+                <i class="fas fa-shield-alt"></i>
+                <span>نظام محمي — الدخول مخصص للإدارة فقط</span>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // إنشاء الجزيئات العائمة
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const colors = ['rgba(220, 38, 38, 0.3)', 'rgba(59, 130, 246, 0.2)', 'rgba(255, 255, 255, 0.1)'];
+
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${color};
+                    left: ${Math.random() * 100}%;
+                    animation-duration: ${Math.random() * 15 + 10}s;
+                    animation-delay: ${Math.random() * 10}s;
+                `;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // تبديل إظهار كلمة المرور
+        document.getElementById('togglePass').addEventListener('click', function () {
+            const passInput = document.getElementById('pass');
+            const icon = this.querySelector('i');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        // دخول بالضغط على Enter
+        document.getElementById('loginForm').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('loginBtn').click();
+            }
+        });
+    </script>
 
     <script type="module">
         import { auth, signInWithEmailAndPassword } from './admin.js';
-        document.getElementById('loginBtn').onclick = () => {
-            const email = document.getElementById('email').value;
+
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMsg = document.getElementById('errorMsg');
+        const errorText = document.getElementById('errorText');
+
+        loginBtn.addEventListener('click', async () => {
+            const email = document.getElementById('email').value.trim();
             const pass = document.getElementById('pass').value;
-            signInWithEmailAndPassword(auth, email, pass)
-                .then(() => window.location.href = 'dashboard.html')
-                .catch(() => alert("خطأ: تأكد من تفعيل Auth في Firebase ومن صحة البيانات"));
-        };
+
+            // إخفاء رسالة الخطأ السابقة
+            errorMsg.classList.remove('show');
+
+            if (!email || !pass) {
+                errorText.textContent = 'يرجى إدخال البريد الإلكتروني وكلمة المرور';
+                errorMsg.classList.add('show');
+                return;
+            }
+
+            // حالة التحميل
+            loginBtn.classList.add('loading');
+
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                loginBtn.classList.remove('loading');
+
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                    errorText.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+                } else if (error.code === 'auth/too-many-requests') {
+                    errorText.textContent = 'تم تجاوز عدد المحاولات. حاول لاحقاً';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorText.textContent = 'صيغة البريد الإلكتروني غير صحيحة';
+                } else {
+                    errorText.textContent = 'حدث خطأ. تأكد من صحة البيانات وحاول مرة أخرى';
+                }
+                errorMsg.classList.add('show');
+            }
+        });
     </script>
 </body>
+
 </html>

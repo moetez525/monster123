@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم | Real Life CFW</title>
+    <link rel="icon" type="image/png" href="logo.png">
 
     <link rel="stylesheet" href="website-color.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -1845,6 +1846,9 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
+                        tooltip: {
+                            enabled: false
+                        },
                         legend: {
                             position: 'bottom',
                             labels: {
@@ -1888,12 +1892,15 @@
             // Try multiple API endpoints for better compatibility
             const apiUrls = [
                 `https://servers-frontend.fivem.net/api/servers/single/${serverCode}`,
-                `https://cfx.re/api/servers/single/${serverCode}`
+                `https://cfx.re/api/servers/single/${serverCode}`,
+                `https://api.fivem.com/server/${serverCode}`
             ];
 
             function tryFetch(urlIndex) {
                 if (urlIndex >= apiUrls.length) {
-                    console.log('جميع محاولات الاتصال فشلت');
+                    console.log('جميع محاولات الاتصال فشلت - عرض 0 لاعب');
+                    document.getElementById('onlinePlayers').textContent = '0';
+                    document.getElementById('playerTrend').textContent = '0%';
                     return;
                 }
 
@@ -1901,17 +1908,19 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data && data.Data) {
-                            const playersOnline = data.Data.playersOnline || 0;
-                            const maxPlayers = data.Data.maxClients || 32;
+                            const playersOnline = data.Data.clients || data.Data.playersOnline || 0;
+                            const maxPlayers = data.Data.maxClients || data.Data.sv_maxClients || 32;
 
                             document.getElementById('onlinePlayers').textContent = playersOnline;
 
                             // حساب النسبة المئوية للنمو
                             const percentage = Math.round((playersOnline / maxPlayers) * 100);
-                            const trend = percentage >= 70 ? '+' : percentage >= 50 ? '=' : '-';
-                            document.getElementById('playerTrend').textContent = trend + (percentage > 0 ? percentage + '%' : '0%');
+                            const trend = percentage >= 70 ? '+' : percentage >= 50 ? '=' : percentage > 0 ? '↑' : '0';
+                            document.getElementById('playerTrend').textContent = trend + (percentage > 0 ? percentage + '%' : '%');
 
                             console.log('تم جلب عدد اللاعبين بنجاح:', playersOnline);
+                        } else {
+                            throw new Error('بيانات غير متوقعة');
                         }
                     })
                     .catch(error => {

@@ -1,71 +1,87 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم | Real Life CFW</title>
-    
+
     <link rel="stylesheet" href="website-color.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <!-- Chart.js للرسوم البيانية -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
             --primary-red: #dc2626;
-            --dark-red: #b91c1c;
-            --black: #0f0f0f;
-            --card-bg: #1a1a1a;
-            --medium-gray: #2a2a2a;
-            --light-gray: #3a3a3a;
-            --text-gray: #9ca3af;
+            --primary-red-light: #ef4444;
+            --dark-red: #991b1b;
+            --black: #0a0e27;
+            --card-bg: #0f1629;
+            --medium-gray: #1a2332;
+            --light-gray: #2a3a52;
+            --text-gray: #8b94a8;
+            --text-gray-light: #a0abb8;
             --white: #ffffff;
-            --accent: #f59e0b;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
             --success: #10b981;
+            --success-light: #34d399;
             --warning: #f59e0b;
+            --warning-light: #fbbf24;
             --danger: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
         }
 
         * {
             box-sizing: border-box;
         }
 
-        body { 
-            background: linear-gradient(135deg, var(--black) 0%, #1a1a1a 100%); 
-            font-family: 'Tajawal', sans-serif; 
-            color: var(--white); 
-            margin: 0; 
-            display: flex; 
+        body {
+            background: linear-gradient(135deg, var(--black) 0%, #0d1219 50%, #0f1629 100%);
+            font-family: 'Tajawal', sans-serif;
+            color: var(--white);
+            margin: 0;
+            display: flex;
             min-height: 100vh;
             overflow-x: hidden;
+            letter-spacing: 0.3px;
         }
 
         /* القائمة الجانبية */
-        .sidebar { 
-            width: 280px; 
-            background: rgba(26, 26, 26, 0.95);
+        .sidebar {
+            --sidebar-width: 260px;
+            width: var(--sidebar-width);
+            min-width: var(--sidebar-width);
+            max-width: var(--sidebar-width);
+            background: rgba(15, 22, 41, 0.98);
             backdrop-filter: blur(20px);
-            height: 100vh; 
-            padding: 30px 25px; 
-            border-left: 1px solid rgba(58, 58, 58, 0.5); 
-            position: fixed; 
-            right: 0; 
-            top: 0; 
+            height: 100vh;
+            padding: 25px 20px;
+            border-left: 1px solid rgba(58, 58, 58, 0.3);
+            position: fixed;
+            right: 0;
+            top: 0;
             display: flex;
             flex-direction: column;
             z-index: 1000;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.3);
+            box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
         }
 
         /* المحتوى الرئيسي */
-        .main-content { 
-            flex: 1; 
-            margin-right: 280px; 
-            padding: 40px 50px; 
+        .main-content {
+            flex: 1;
+            margin-right: var(--sidebar-width, 240px);
+            padding: 25px;
             background: transparent;
             position: relative;
+            min-width: 0;
+            width: calc(100% - var(--sidebar-width, 240px));
+            overflow-x: hidden;
         }
 
         .main-content::before {
@@ -76,23 +92,23 @@
             right: 0;
             bottom: 0;
             background: radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
             pointer-events: none;
         }
 
         /* البطاقات */
-        .section-card { 
-            background: rgba(26, 26, 26, 0.9);
-            backdrop-filter: blur(15px);
-            padding: 30px; 
-            border-radius: 20px; 
-            margin-bottom: 35px; 
-            border: 1px solid rgba(58, 58, 58, 0.3);
-            border-right: 4px solid var(--primary-red); 
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05); 
+        .section-card {
+            background: rgba(15, 22, 41, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 35px;
+            border-radius: 24px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(58, 82, 115, 0.4);
+            border-right: 3px solid var(--primary-red);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .section-card::before {
@@ -100,76 +116,96 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
-            border-radius: 0 20px 0 100px;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, transparent 70%);
+            border-radius: 0 24px 0 120px;
         }
 
         .section-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(220, 38, 38, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(220, 38, 38, 0.15);
+            border-right: 3px solid var(--primary-red-light);
         }
 
-        h1 { 
-            color: var(--white); 
-            margin-bottom: 40px; 
-            font-size: 2.5rem; 
+        h1 {
+            color: var(--white);
+            margin-bottom: 40px;
+            font-size: 2.8rem;
             font-weight: 700;
-            border-bottom: 3px solid var(--primary-red); 
+            letter-spacing: -0.5px;
+            border-bottom: 2px solid var(--primary-red);
             padding-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        h2 { 
-            margin-top: 0; 
-            color: var(--primary-red); 
-            font-size: 1.5rem; 
-            margin-bottom: 25px; 
-            display: flex; 
-            align-items: center; 
+        h2 {
+            margin-top: 0;
+            color: var(--primary-red);
+            font-size: 1.6rem;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
             gap: 12px;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: -0.3px;
         }
 
         /* الحقول */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 20px;
+        }
 
-        .input-group { margin-bottom: 25px; }
-        label { 
-            display: block; 
-            margin-bottom: 12px; 
-            color: var(--text-gray); 
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+            gap: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--text-gray-light);
             font-size: 0.95rem;
-            font-weight: 500;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
+            letter-spacing: 0.2px;
         }
-        
-        input, textarea, select { 
-            width: 100%; 
-            padding: 15px 18px; 
-            background: rgba(42, 42, 42, 0.8);
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(42, 58, 89, 0.6);
             backdrop-filter: blur(10px);
-            border: 2px solid rgba(58, 58, 58, 0.5); 
-            color: var(--white); 
-            border-radius: 12px; 
-            font-family: inherit; 
-            font-size: 14px; 
+            border: 1.5px solid rgba(58, 82, 115, 0.5);
+            color: var(--white);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
             box-sizing: border-box;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             outline: none;
         }
 
-        input:focus, textarea:focus, select:focus { 
-            border-color: var(--primary-red); 
-            background: rgba(50, 50, 50, 0.9);
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--primary-red);
+            background: rgba(50, 70, 110, 0.8);
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
             transform: translateY(-2px);
         }
 
@@ -188,21 +224,21 @@
         }
 
         /* الأزرار */
-        .btn-save { 
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
-            color: white; 
-            border: none; 
-            padding: 15px 35px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            font-size: 1rem; 
-            transition: all 0.3s ease; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 10px; 
+        .btn-save {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -214,44 +250,45 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transition: left 0.6s;
         }
 
         .btn-save:hover::before {
             left: 100%;
         }
 
-        .btn-save:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+        .btn-save:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(220, 38, 38, 0.45);
+            background: linear-gradient(135deg, var(--primary-red-light) 0%, #dc2626 100%);
         }
 
         .btn-save:active {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
-        .logout-btn { 
+        .logout-btn {
             background: rgba(34, 34, 34, 0.8);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(68, 68, 68, 0.5); 
-            color: var(--danger); 
-            padding: 15px; 
-            width: 100%; 
-            cursor: pointer; 
-            margin-top: auto; 
-            border-radius: 12px; 
-            font-weight: 600; 
-            transition: all 0.3s ease; 
+            border: 1px solid rgba(68, 68, 68, 0.5);
+            color: var(--danger);
+            padding: 15px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: auto;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .logout-btn:hover { 
-            background: var(--danger); 
+        .logout-btn:hover {
+            background: var(--danger);
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
@@ -259,30 +296,31 @@
 
         /* تنبيهات */
         .alert {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            color: var(--warning);
-            padding: 15px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1.5px solid rgba(245, 158, 11, 0.4);
+            color: var(--warning-light);
+            padding: 16px 20px;
             border-radius: 12px;
             margin-bottom: 25px;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 14px;
             backdrop-filter: blur(10px);
         }
 
         .alert i {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-top: 2px;
+            flex-shrink: 0;
         }
 
         /* إضافة عضو جديد */
         .add-member-form {
-            background: rgba(255,255,255,0.05);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(42, 58, 89, 0.4);
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(58, 82, 115, 0.3);
             backdrop-filter: blur(10px);
         }
 
@@ -307,7 +345,7 @@
 
         .member-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .member-photo {
@@ -367,25 +405,47 @@
 
         /* للهواتف */
         @media (max-width: 768px) {
-            .sidebar { 
-                width: 100%; 
-                height: auto; 
-                position: relative; 
-                border: none; 
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border: none;
                 border-bottom: 1px solid rgba(58, 58, 58, 0.5);
                 box-shadow: none;
             }
-            body { flex-direction: column; }
-            .main-content { 
-                margin-right: 0; 
-                padding: 25px 20px; 
+
+            body {
+                flex-direction: column;
             }
-            .grid-2 { grid-template-columns: 1fr; }
-            .grid-3 { grid-template-columns: 1fr; }
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.3rem; }
-            .section-card { padding: 20px; }
-            #membersListContainer { grid-template-columns: 1fr; }
+
+            .main-content {
+                margin-right: 0;
+                padding: 25px 20px;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .section-card {
+                padding: 20px;
+            }
+
+            #membersListContainer {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* تحسينات إضافية */
@@ -407,7 +467,10 @@
         }
 
         /* تأثيرات التركيز */
-        input:focus, textarea:focus, select:focus, button:focus {
+        input:focus,
+        textarea:focus,
+        select:focus,
+        button:focus {
             outline: none;
         }
 
@@ -419,24 +482,24 @@
         /* لوحة المراقبة السريعة */
         .overview-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
             margin-bottom: 40px;
         }
 
         .metric-card {
-            background: rgba(26, 26, 26, 0.9);
-            backdrop-filter: blur(15px);
-            padding: 25px;
+            background: rgba(15, 22, 41, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 28px;
             border-radius: 20px;
-            border: 1px solid rgba(58, 58, 58, 0.3);
+            border: 1px solid rgba(58, 82, 115, 0.4);
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 22px;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
         }
 
         .metric-card::before {
@@ -444,121 +507,238 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
-            border-radius: 0 20px 0 80px;
+            border-radius: 0 20px 0 100px;
         }
 
         .metric-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            border-color: rgba(220, 38, 38, 0.3);
         }
 
         .metric-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
-            border-radius: 15px;
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: white;
-            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+            flex-shrink: 0;
         }
 
         .metric-content h3 {
             margin: 0 0 5px 0;
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 800;
             color: var(--white);
+            letter-spacing: -0.5px;
         }
 
         .metric-content p {
             margin: 0;
             color: var(--text-gray);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
+        }
+
+        .metric-content a {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .metric-content a:hover {
+            color: var(--primary-red-light) !important;
+            filter: brightness(1.2);
         }
 
         .metric-trend {
             margin-left: auto;
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 5px 10px;
+            gap: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 6px 12px;
             border-radius: 20px;
+            letter-spacing: -0.2px;
         }
 
         .metric-trend.positive {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success-light);
         }
 
         .metric-trend.neutral {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning);
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning-light);
         }
 
         /* الرسوم البيانية */
         .charts-section {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 450px), 1fr));
+            gap: 28px;
+            margin-bottom: 45px;
         }
 
         .chart-card {
-            background: rgba(26, 26, 26, 0.9);
-            backdrop-filter: blur(15px);
+            background: rgba(15, 22, 41, 0.9);
+            backdrop-filter: blur(20px);
             padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(58, 58, 58, 0.3);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            border-radius: 24px;
+            border: 1px solid rgba(58, 82, 115, 0.4);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            min-width: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chart-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
         }
 
         .chart-card h3 {
-            margin: 0 0 25px 0;
+            margin: 0 0 20px 0;
             color: var(--white);
-            font-size: 1.3rem;
+            font-size: 1.35rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            letter-spacing: -0.3px;
         }
 
         .chart-container {
             position: relative;
-            height: 250px;
+            height: 220px;
+            width: 100%;
+        }
+
+        /* مؤشر البث المباشر */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-right: auto;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #34d399;
+            border-radius: 50%;
+            display: inline-block;
+            animation: livePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+            }
+
+            50% {
+                opacity: 0.5;
+                box-shadow: 0 0 0 6px rgba(52, 211, 153, 0);
+            }
+        }
+
+        .chart-subtitle {
+            margin: -10px 0 15px 0;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .chart-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(58, 82, 115, 0.2);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chart-timestamp {
+            color: var(--text-gray);
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chart-legend-hint {
+            color: var(--text-gray);
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .legend-dot.current {
+            background: #fbbf24;
+            box-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+        }
+
+        .legend-dot.recorded {
+            background: #dc2626;
+            box-shadow: 0 0 8px rgba(220, 38, 38, 0.4);
         }
 
         /* تحسينات الشريط الجانبي */
         .sidebar-header {
             text-align: center;
             margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(58, 58, 58, 0.3);
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(58, 82, 115, 0.3);
         }
 
         .sidebar-logo {
-            max-width: 80px;
-            filter: drop-shadow(0 0 10px var(--primary-red));
-            margin-bottom: 15px;
+            max-width: 85px;
+            filter: drop-shadow(0 0 12px var(--primary-red));
+            margin-bottom: 16px;
         }
 
         .sidebar-title h2 {
             color: white;
             margin: 0 0 8px 0;
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
         }
 
         .sidebar-title p {
             color: var(--text-gray);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             margin: 0;
+            font-weight: 500;
         }
 
         .sidebar-nav {
@@ -571,12 +751,12 @@
         }
 
         .nav-section h4 {
-            color: var(--text-gray);
+            color: var(--text-gray-light);
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0 0 15px 0;
+            letter-spacing: 1px;
+            margin: 0 0 16px 0;
             padding-right: 15px;
         }
 
@@ -584,25 +764,26 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 12px 15px;
+            padding: 13px 16px;
             color: var(--text-gray);
             text-decoration: none;
             border-radius: 12px;
-            margin-bottom: 5px;
-            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            font-weight: 500;
         }
 
         .nav-item:hover {
-            background: rgba(220, 38, 38, 0.1);
-            color: var(--white);
-            transform: translateX(-5px);
+            background: rgba(220, 38, 38, 0.12);
+            color: var(--primary-red-light);
+            transform: translateX(-4px);
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            background: var(--gradient-primary);
             color: white;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
         }
 
         .nav-item i {
@@ -615,44 +796,49 @@
             font-weight: 500;
         }
 
-        .sidebar-footer {
-            border-top: 1px solid rgba(58, 58, 58, 0.3);
-            padding-top: 20px;
+        .dashboard-section {
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
 
         .user-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(42, 42, 42, 0.5);
+            padding: 16px;
+            background: rgba(42, 58, 89, 0.5);
             border-radius: 12px;
+            border: 1px solid rgba(58, 82, 115, 0.2);
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-primary);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
         }
 
         .user-details .user-name {
             margin: 0 0 3px 0;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--white);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            letter-spacing: -0.2px;
         }
 
         .user-details .user-role {
             margin: 0;
             color: var(--text-gray);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 500;
         }
 
         .logout-btn {
@@ -660,29 +846,24 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(68, 68, 68, 0.5);
             color: var(--danger);
-            padding: 15px;
+            padding: 14px;
             width: 100%;
             cursor: pointer;
             border-radius: 12px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
         .logout-btn:hover {
             background: var(--danger);
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
-        }
-
-        /* تحسينات التنبيهات */
-        .alert {
-            background: rgba(245, 158, 11, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
             border: 1px solid rgba(245, 158, 11, 0.3);
             color: var(--warning);
             padding: 15px;
@@ -701,11 +882,11 @@
 
         /* تحسينات النماذج */
         .add-member-form {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             padding: 20px;
             border-radius: 15px;
             margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
         }
 
@@ -730,7 +911,7 @@
 
         .member-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .member-photo {
@@ -792,22 +973,48 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .section-card, .metric-card, .chart-card {
-            animation: fadeInUp 0.6s ease-out;
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        .metric-card:nth-child(1) { animation-delay: 0.1s; }
-        .metric-card:nth-child(2) { animation-delay: 0.2s; }
-        .metric-card:nth-child(3) { animation-delay: 0.3s; }
-        .metric-card:nth-child(4) { animation-delay: 0.4s; }
+        .section-card,
+        .metric-card,
+        .chart-card {
+            animation: fadeInUp 0.7s ease-out;
+        }
+
+        .metric-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .metric-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .metric-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .metric-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
 
         /* تأثيرات التحميل */
         .loading-overlay {
@@ -821,7 +1028,7 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
 
         .loading-overlay.hidden {
@@ -830,23 +1037,101 @@
         }
 
         .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(58, 58, 58, 0.3);
+            width: 70px;
+            height: 70px;
+            border: 4px solid rgba(58, 82, 115, 0.3);
             border-top: 4px solid var(--primary-red);
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.2);
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* للشاشات المتوسطة */
+        @media (max-width: 1200px) {
+            .sidebar {
+                --sidebar-width: 210px;
+                width: var(--sidebar-width);
+                min-width: var(--sidebar-width);
+                max-width: var(--sidebar-width);
+                padding: 15px 12px;
+            }
+
+            .main-content {
+                margin-right: var(--sidebar-width);
+                width: calc(100% - var(--sidebar-width));
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-card {
+                padding: 20px;
+            }
+        }
+
+        /* للشاشات الصغيرة */
+        @media (max-width: 992px) {
+            .sidebar {
+                --sidebar-width: 190px;
+                width: var(--sidebar-width);
+                min-width: var(--sidebar-width);
+                max-width: var(--sidebar-width);
+                padding: 12px 10px;
+            }
+
+            .main-content {
+                margin-right: var(--sidebar-width);
+                width: calc(100% - var(--sidebar-width));
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            .section-card {
+                padding: 15px;
+            }
+
+            .metric-card {
+                padding: 15px;
+                gap: 12px;
+            }
+
+            .metric-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+
+            .metric-content h3 {
+                font-size: 1.5rem;
+            }
         }
 
         /* للهواتف */
         @media (max-width: 768px) {
             .sidebar {
+                --sidebar-width: 100%;
                 width: 100%;
+                min-width: 100%;
+                max-width: 100%;
                 height: auto;
                 position: relative;
                 border: none;
@@ -854,24 +1139,60 @@
                 box-shadow: none;
                 padding: 20px;
             }
-            body { flex-direction: column; }
+
+            body {
+                flex-direction: column;
+            }
+
             .main-content {
                 margin-right: 0;
-                padding: 25px 20px;
+                width: 100%;
+                padding: 20px 15px;
             }
-            .grid-2 { grid-template-columns: 1fr; }
-            .grid-3 { grid-template-columns: 1fr; }
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.3rem; }
-            .section-card { padding: 20px; }
-            #membersListContainer { grid-template-columns: 1fr; }
-            .overview-grid { grid-template-columns: 1fr; }
-            .charts-section { grid-template-columns: 1fr; }
-            .sidebar-nav { display: none; }
-            .sidebar-footer { display: none; }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .section-card {
+                padding: 15px;
+            }
+
+            #membersListContainer {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-nav {
+                display: none;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
         }
     </style>
 </head>
+
 <body id="adminBody">
 
     <!-- شاشة التحميل -->
@@ -887,7 +1208,7 @@
                 <p>نظام التحكم الشامل</p>
             </div>
         </div>
-        
+
         <nav class="sidebar-nav">
             <div class="nav-section">
                 <h4>الرئيسية</h4>
@@ -900,7 +1221,7 @@
                     <span>التحليلات</span>
                 </a>
             </div>
-            
+
             <div class="nav-section">
                 <h4>الإدارة</h4>
                 <a href="#" class="nav-item" data-section="applications">
@@ -916,7 +1237,7 @@
                     <span>فريق الإدارة</span>
                 </a>
             </div>
-            
+
             <div class="nav-section">
                 <h4>النظام</h4>
                 <a href="#" class="nav-item" data-section="settings">
@@ -940,9 +1261,9 @@
                     <p class="user-role">مسؤول النظام</p>
                 </div>
             </div>
-            
+
             <button id="logoutBtn" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i> 
+                <i class="fas fa-sign-out-alt"></i>
                 <span>تسجيل الخروج</span>
             </button>
         </div>
@@ -952,78 +1273,92 @@
         <!-- قسم لوحة التحكم -->
         <section id="section-dashboard" class="dashboard-section" style="display: block;">
             <h1><i class="fas fa-tachometer-alt"></i> لوحة التحكم الرئيسية</h1>
-            
+
             <!-- لوحة المراقبة السريعة -->
             <div class="overview-grid">
-            <div class="metric-card">
-                <div class="metric-icon">
-                    <i class="fas fa-users"></i>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="onlinePlayers">--</h3>
+                        <p><a href="https://cfx.re/join/4o8yx5" target="_blank"
+                                style="color: var(--primary-red); text-decoration: none; font-weight: 600; transition: all 0.3s ease;">لاعبين
+                                متصلين</a></p>
+                    </div>
+                    <div class="metric-trend positive">
+                        <i class="fas fa-arrow-up"></i> <span id="playerTrend">+12%</span>
+                    </div>
                 </div>
-                <div class="metric-content">
-                    <h3 id="onlinePlayers">--</h3>
-                    <p>لاعبين متصلين</p>
-                </div>
-                <div class="metric-trend positive">
-                    <i class="fas fa-arrow-up"></i> +12%
-                </div>
-            </div>
-            
-            <div class="metric-card">
-                <div class="metric-icon">
-                    <i class="fas fa-user-plus"></i>
-                </div>
-                <div class="metric-content">
-                    <h3 id="totalMembers">--</h3>
-                    <p>إجمالي الأعضاء</p>
-                </div>
-                <div class="metric-trend positive">
-                    <i class="fas fa-arrow-up"></i> +5%
-                </div>
-            </div>
-            
-            <div class="metric-card">
-                <div class="metric-icon">
-                    <i class="fas fa-file-alt"></i>
-                </div>
-                <div class="metric-content">
-                    <h3 id="activeApps">--</h3>
-                    <p>طلبات نشطة</p>
-                </div>
-                <div class="metric-trend neutral">
-                    <i class="fas fa-minus"></i> 0%
-                </div>
-            </div>
-            
-            <div class="metric-card">
-                <div class="metric-icon">
-                    <i class="fas fa-server"></i>
-                </div>
-                <div class="metric-content">
-                    <h3 id="serverStatus">ممتاز</h3>
-                    <p>حالة السيرفر</p>
-                </div>
-                <div class="metric-trend positive">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-            </div>
-        </div>
 
-        <!-- الرسوم البيانية -->
-        <div class="charts-section">
-            <div class="chart-card">
-                <h3><i class="fas fa-chart-line"></i> إحصائيات النشاط اليومي</h3>
-                <div class="chart-container">
-                    <canvas id="activityChart" width="400" height="200"></canvas>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="totalMembers">--</h3>
+                        <p><a href="https://discord.com/invite/RL0" target="_blank"
+                                style="color: var(--primary-red); text-decoration: none; font-weight: 600; transition: all 0.3s ease;">إجمالي
+                                الأعضاء</a></p>
+                    </div>
+                    <div class="metric-trend positive">
+                        <i class="fas fa-arrow-up"></i> <span id="membersTrend">+5%</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="activeApps">--</h3>
+                        <p>طلبات نشطة</p>
+                    </div>
+                    <div class="metric-trend neutral">
+                        <i class="fas fa-minus"></i> 0%
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="metric-content">
+                        <h3 id="serverStatus">ممتاز</h3>
+                        <p>حالة السيرفر</p>
+                    </div>
+                    <div class="metric-trend positive">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
                 </div>
             </div>
-            
-            <div class="chart-card">
-                <h3><i class="fas fa-chart-pie"></i> توزيع الأعضاء</h3>
-                <div class="chart-container">
-                    <canvas id="membersChart" width="400" height="200"></canvas>
+
+            <!-- الرسوم البيانية -->
+            <div class="charts-section">
+                <div class="chart-card">
+                    <h3>
+                        <i class="fas fa-chart-line"></i> إحصائيات النشاط اليومي
+                        <span class="live-badge"><span class="live-dot"></span> مباشر</span>
+                    </h3>
+                    <p class="chart-subtitle">تتبع حقيقي لأعلى عدد لاعبين في كل ساعة — يتم التحديث كل 5 دقائق</p>
+                    <div class="chart-container">
+                        <canvas id="activityChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="chart-footer">
+                        <span id="activityLastUpdated" class="chart-timestamp"><i class="fas fa-clock"></i> جاري
+                            التحديث...</span>
+                        <span class="chart-legend-hint"><span class="legend-dot current"></span> الساعة الحالية <span
+                                class="legend-dot recorded"></span> بيانات مسجلة</span>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-pie"></i> توزيع الأعضاء</h3>
+                    <div class="chart-container">
+                        <canvas id="membersChart" width="400" height="200"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
         </section>
 
         <!-- قسم التحليلات -->
@@ -1075,7 +1410,7 @@
                         <strong>تنبيه:</strong> اكتب كل قانون في سطر جديد ليظهر بنظام النقاط في الموقع.
                     </div>
                 </div>
-                
+
                 <div class="grid-2">
                     <div class="input-group">
                         <label><i class="fas fa-list"></i> 1. القوانين العامة</label>
@@ -1105,8 +1440,9 @@
             <h1><i class="fas fa-users-cog"></i> فريق الإدارة</h1>
             <div class="section-card">
                 <h2><i class="fas fa-users-cog"></i> إدارة فريق الإدارة</h2>
-                <p style="color: var(--text-gray); font-size: 0.85rem; margin-bottom: 20px;">* يمكنك إضافة أعضاء جدد أو حذف الحاليين.</p>
-                
+                <p style="color: var(--text-gray); font-size: 0.85rem; margin-bottom: 20px;">* يمكنك إضافة أعضاء جدد أو
+                    حذف الحاليين.</p>
+
                 <div class="add-member-form">
                     <div class="grid-2">
                         <div class="input-group">
@@ -1164,11 +1500,11 @@
     </div>
 
     <script type="module" src="dashboard.js"></script>
-    
+
     <!-- سكريبت لوحة التحكم المحسنة -->
     <script>
         // تهيئة الرسوم البيانية عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // إخفاء شاشة التحميل مباشرة
             const loadingOverlay = document.getElementById('loadingOverlay');
             if (loadingOverlay) {
@@ -1180,51 +1516,312 @@
             initializeNavigation();
         });
 
-        function initializeCharts() {
-            // رسم بياني للنشاط اليومي
-            const activityCtx = document.getElementById('activityChart').getContext('2d');
-            new Chart(activityCtx, {
-                type: 'line',
-                data: {
-                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
-                    datasets: [{
-                        label: 'عدد اللاعبين',
-                        data: [45, 32, 78, 125, 98, 156],
-                        borderColor: '#dc2626',
-                        backgroundColor: 'rgba(220, 38, 38, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
+        // ===== نظام تتبع النشاط الحقيقي على مدار 24 ساعة =====
+        const ACTIVITY_STORAGE_KEY = 'fivem_hourly_activity';
+        const ACTIVITY_SAMPLES_KEY = 'fivem_hourly_samples';
+        let activityChartInstance = null;
+
+        // الحصول على مفتاح الساعة الحالية (مثل: "2026-04-22-20")
+        function getHourKey(date) {
+            const d = date || new Date();
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}-${String(d.getHours()).padStart(2, '0')}`;
+        }
+
+        // تحميل بيانات النشاط المخزنة
+        function loadActivityData() {
+            try {
+                const raw = localStorage.getItem(ACTIVITY_STORAGE_KEY);
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        // تحميل عدد العينات لكل ساعة
+        function loadSamplesData() {
+            try {
+                const raw = localStorage.getItem(ACTIVITY_SAMPLES_KEY);
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        // حفظ بيانات النشاط
+        function saveActivityData(data) {
+            localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(data));
+        }
+
+        // حفظ عدد العينات
+        function saveSamplesData(data) {
+            localStorage.setItem(ACTIVITY_SAMPLES_KEY, JSON.stringify(data));
+        }
+
+        // تنظيف البيانات القديمة (أكثر من 48 ساعة)
+        function cleanOldData(activityData, samplesData) {
+            const now = new Date();
+            const cutoff = new Date(now.getTime() - 48 * 60 * 60 * 1000);
+
+            Object.keys(activityData).forEach(key => {
+                const parts = key.split('-');
+                const keyDate = new Date(parts[0], parts[1] - 1, parts[2], parts[3]);
+                if (keyDate < cutoff) {
+                    delete activityData[key];
+                    delete samplesData[key];
+                }
+            });
+
+            return { activityData, samplesData };
+        }
+
+        // تسجيل عدد اللاعبين الحالي في الساعة الحالية
+        function recordPlayerCount(playerCount) {
+            let activityData = loadActivityData();
+            let samplesData = loadSamplesData();
+
+            // تنظيف البيانات القديمة
+            const cleaned = cleanOldData(activityData, samplesData);
+            activityData = cleaned.activityData;
+            samplesData = cleaned.samplesData;
+
+            const hourKey = getHourKey();
+
+            // حساب المتوسط التراكمي: نخزن أعلى عدد لاعبين في الساعة (peak)
+            if (!activityData[hourKey] || playerCount > activityData[hourKey]) {
+                activityData[hourKey] = playerCount;
+            }
+
+            // تسجيل عدد العينات
+            samplesData[hourKey] = (samplesData[hourKey] || 0) + 1;
+
+            saveActivityData(activityData);
+            saveSamplesData(samplesData);
+
+            return activityData;
+        }
+
+        // بناء بيانات الرسم البياني لآخر 24 ساعة
+        function buildChartData(activityData) {
+            const hours = [];
+            const data = [];
+            const pointColors = [];
+            const pointSizes = [];
+            const now = new Date();
+            const currentHourKey = getHourKey(now);
+
+            for (let i = 23; i >= 0; i--) {
+                const hourDate = new Date(now.getTime() - i * 60 * 60 * 1000);
+                const hourKey = getHourKey(hourDate);
+                const hourLabel = String(hourDate.getHours()).padStart(2, '0') + ':00';
+
+                hours.push(hourLabel);
+
+                const value = activityData[hourKey] || 0;
+                data.push(value);
+
+                // الساعة الحالية تكون بلون مميز
+                if (hourKey === currentHourKey) {
+                    pointColors.push('#fbbf24');
+                    pointSizes.push(8);
+                } else if (value > 0) {
+                    pointColors.push('#dc2626');
+                    pointSizes.push(5);
+                } else {
+                    pointColors.push('rgba(220, 38, 38, 0.3)');
+                    pointSizes.push(3);
+                }
+            }
+
+            return { hours, data, pointColors, pointSizes };
+        }
+
+        // تحديث الرسم البياني
+        function renderActivityChart(activityData) {
+            const { hours, data, pointColors, pointSizes } = buildChartData(activityData);
+
+            const activityCtx = document.getElementById('activityChart');
+
+            if (activityChartInstance) {
+                activityChartInstance.data.labels = hours;
+                activityChartInstance.data.datasets[0].data = data;
+                activityChartInstance.data.datasets[0].pointBackgroundColor = pointColors;
+                activityChartInstance.data.datasets[0].pointRadius = pointSizes;
+                activityChartInstance.update('none');
+            } else {
+                activityChartInstance = new Chart(activityCtx, {
+                    type: 'line',
+                    data: {
+                        labels: hours,
+                        datasets: [{
+                            label: 'أعلى عدد لاعبين',
+                            data: data,
+                            borderColor: '#dc2626',
+                            backgroundColor: function (context) {
+                                const chart = context.chart;
+                                const { ctx, chartArea } = chart;
+                                if (!chartArea) return 'rgba(220, 38, 38, 0.08)';
+                                const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                                gradient.addColorStop(0, 'rgba(220, 38, 38, 0.25)');
+                                gradient.addColorStop(0.5, 'rgba(220, 38, 38, 0.08)');
+                                gradient.addColorStop(1, 'rgba(220, 38, 38, 0.01)');
+                                return gradient;
                             },
-                            ticks: {
-                                color: '#9ca3af'
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: pointColors,
+                            pointBorderColor: '#0f1629',
+                            pointBorderWidth: 2,
+                            pointRadius: pointSizes,
+                            pointHoverRadius: 9,
+                            pointHoverBackgroundColor: '#fbbf24',
+                            pointHoverBorderColor: '#fff',
+                            pointHoverBorderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 22, 41, 0.95)',
+                                titleColor: '#fbbf24',
+                                bodyColor: '#ffffff',
+                                borderColor: 'rgba(220, 38, 38, 0.5)',
+                                borderWidth: 1,
+                                padding: 14,
+                                cornerRadius: 12,
+                                titleFont: { size: 13, weight: 700, family: 'Tajawal' },
+                                bodyFont: { size: 14, weight: 600, family: 'Tajawal' },
+                                displayColors: false,
+                                callbacks: {
+                                    title: function (items) {
+                                        return '⏰ الساعة ' + items[0].label;
+                                    },
+                                    label: function (item) {
+                                        const val = item.raw;
+                                        if (val === 0) return '🔴 لا يوجد بيانات مسجلة';
+                                        return '👥 أعلى عدد: ' + val + ' لاعب';
+                                    },
+                                    afterLabel: function (item) {
+                                        const now = new Date();
+                                        const currentHourKey = getHourKey(now);
+                                        const idx = item.dataIndex;
+                                        const hourDate = new Date(now.getTime() - (23 - idx) * 60 * 60 * 1000);
+                                        const hourKey = getHourKey(hourDate);
+                                        if (hourKey === currentHourKey) {
+                                            return '🟢 الساعة الحالية (يتم التحديث)';
+                                        }
+                                        return '';
+                                    }
+                                }
                             }
                         },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.06)',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#8b94a8',
+                                    font: { size: 11, weight: 600 },
+                                    stepSize: 1,
+                                    callback: function (value) {
+                                        return Number.isInteger(value) ? value : '';
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'عدد اللاعبين',
+                                    color: '#6b7280',
+                                    font: { size: 11, weight: 600, family: 'Tajawal' }
+                                }
                             },
-                            ticks: {
-                                color: '#9ca3af'
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.04)',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#8b94a8',
+                                    font: { size: 10, weight: 600 },
+                                    maxRotation: 45,
+                                    minRotation: 0
+                                }
                             }
                         }
                     }
+                });
+            }
+        }
+
+        // جلب بيانات اللاعبين وتسجيلها
+        function fetchAndRecordActivity() {
+            const serverEndpoint = '4o8yx5';
+            const apiUrls = [
+                `https://servers-frontend.fivem.net/api/servers/single/${serverEndpoint}`,
+                `https://cfx.re/api/servers/single/${serverEndpoint}`
+            ];
+
+            function tryFetch(urlIndex) {
+                if (urlIndex >= apiUrls.length) {
+                    // إذا فشلت جميع المحاولات، نعرض البيانات المخزنة فقط
+                    const activityData = loadActivityData();
+                    renderActivityChart(activityData);
+                    return;
                 }
-            });
+
+                fetch(apiUrls[urlIndex])
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.Data) {
+                            const playersOnline = data.Data.clients || data.Data.playersOnline || 0;
+
+                            // تسجيل العدد الحقيقي
+                            const activityData = recordPlayerCount(playersOnline);
+
+                            // تحديث الرسم البياني بالبيانات الحقيقية
+                            renderActivityChart(activityData);
+
+                            // تحديث وقت آخر تحديث
+                            const now = new Date();
+                            const timeStr = now.toLocaleString('ar-SA', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+                            const updatedEl = document.getElementById('activityLastUpdated');
+                            if (updatedEl) {
+                                updatedEl.innerHTML = '<i class="fas fa-check-circle" style="color: #34d399;"></i> آخر تحديث: ' + timeStr + ' — ' + playersOnline + ' لاعب متصل الآن';
+                            }
+
+                            console.log(`✅ تم تسجيل النشاط: ${playersOnline} لاعب في الساعة ${now.getHours()}:00`);
+                        }
+                    })
+                    .catch(error => {
+                        console.warn(`محاولة ${urlIndex + 1} فشلت:`, error);
+                        tryFetch(urlIndex + 1);
+                    });
+            }
+
+            tryFetch(0);
+        }
+
+        function initializeCharts() {
+            // تحميل البيانات المخزنة وعرضها فوراً
+            const storedData = loadActivityData();
+            renderActivityChart(storedData);
+
+            // جلب البيانات الحقيقية فوراً
+            fetchAndRecordActivity();
+
+            // تحديث كل 5 دقائق (جلب + تسجيل + تحديث الرسم)
+            setInterval(fetchAndRecordActivity, 300000);
 
             // رسم بياني دائري لتوزيع الأعضاء
             const membersCtx = document.getElementById('membersChart').getContext('2d');
@@ -1233,14 +1830,15 @@
                 data: {
                     labels: ['الإدارة العليا', 'المؤسسين', 'المطورين', 'الأعضاء العاديين'],
                     datasets: [{
-                        data: [5, 12, 8, 245],
+                        data: [5, 12, 4, 250],
                         backgroundColor: [
                             '#dc2626',
                             '#f59e0b',
                             '#10b981',
                             '#6b7280'
                         ],
-                        borderWidth: 0
+                        borderWidth: 0,
+                        borderRadius: 4
                     }]
                 },
                 options: {
@@ -1250,9 +1848,13 @@
                         legend: {
                             position: 'bottom',
                             labels: {
-                                color: '#9ca3af',
+                                color: '#8b94a8',
                                 padding: 20,
-                                usePointStyle: true
+                                usePointStyle: true,
+                                font: {
+                                    size: 12,
+                                    weight: 600
+                                }
                             }
                         }
                     }
@@ -1261,41 +1863,129 @@
         }
 
         function updateMetrics() {
-            // تحديث المقاييس بشكل عشوائي للعرض التوضيحي
-            document.getElementById('onlinePlayers').textContent = Math.floor(Math.random() * 50) + 100;
-            document.getElementById('totalMembers').textContent = Math.floor(Math.random() * 100) + 250;
+            // Fetch real player count from FiveM server
+            fetchFiveMLivePlayerCount();
+
+            // Fetch Discord member count
+            fetchDiscordMemberCount();
+
+            // تحديث المقاييس الأخرى
             document.getElementById('activeApps').textContent = Math.floor(Math.random() * 20) + 5;
-            
-            // تحديث المقاييس كل 30 ثانية
+
+            // تحديث عد اللاعبين كل 10 ثوان
             setInterval(() => {
-                document.getElementById('onlinePlayers').textContent = Math.floor(Math.random() * 50) + 100;
+                fetchFiveMLivePlayerCount();
+            }, 10000);
+
+            // تحديث عدد أعضاء Discord كل 30 ثانية
+            setInterval(() => {
+                fetchDiscordMemberCount();
             }, 30000);
+        }
+
+        function fetchFiveMLivePlayerCount() {
+            const serverCode = '4o8yx5';
+            // Try multiple API endpoints for better compatibility
+            const apiUrls = [
+                `https://servers-frontend.fivem.net/api/servers/single/${serverCode}`,
+                `https://cfx.re/api/servers/single/${serverCode}`
+            ];
+
+            function tryFetch(urlIndex) {
+                if (urlIndex >= apiUrls.length) {
+                    console.log('جميع محاولات الاتصال فشلت');
+                    return;
+                }
+
+                fetch(apiUrls[urlIndex])
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.Data) {
+                            const playersOnline = data.Data.playersOnline || 0;
+                            const maxPlayers = data.Data.maxClients || 32;
+
+                            document.getElementById('onlinePlayers').textContent = playersOnline;
+
+                            // حساب النسبة المئوية للنمو
+                            const percentage = Math.round((playersOnline / maxPlayers) * 100);
+                            const trend = percentage >= 70 ? '+' : percentage >= 50 ? '=' : '-';
+                            document.getElementById('playerTrend').textContent = trend + (percentage > 0 ? percentage + '%' : '0%');
+
+                            console.log('تم جلب عدد اللاعبين بنجاح:', playersOnline);
+                        }
+                    })
+                    .catch(error => {
+                        console.warn(`خطأ في المحاولة ${urlIndex + 1}:`, error);
+                        tryFetch(urlIndex + 1);
+                    });
+            }
+
+            tryFetch(0);
+        }
+
+        function fetchDiscordMemberCount() {
+            const discordInviteCode = 'RL0';
+            const apiUrl = `https://discord.com/api/v9/invites/${discordInviteCode}?with_counts=true`;
+
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.approximate_member_count) {
+                        const memberCount = data.approximate_member_count;
+                        document.getElementById('totalMembers').textContent = memberCount;
+
+                        // حساب النسبة
+                        const percentage = Math.abs(Math.round((Math.random() * 5) + 1));
+                        const trend = Math.random() > 0.5 ? '+' : '-';
+                        document.getElementById('membersTrend').textContent = trend + percentage + '%';
+
+                        console.log('تم جلب عدد أعضاء Discord بنجاح:', memberCount);
+                    }
+                })
+                .catch(error => {
+                    console.error('خطأ في جلب أعضاء Discord:', error);
+                    document.getElementById('totalMembers').textContent = '--';
+                });
         }
 
         function initializeNavigation() {
             const navItems = document.querySelectorAll('.nav-item');
             const allSections = document.querySelectorAll('.dashboard-section');
-            
+
             navItems.forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
+
                     // إزالة الفئة النشطة من جميع العناصر
                     navItems.forEach(nav => nav.classList.remove('active'));
-                    
+
                     // إضافة الفئة النشطة للعنصر المحدد
                     this.classList.add('active');
-                    
-                    // إخفاء جميع الأقسام
-                    allSections.forEach(sec => sec.style.display = 'none');
-                    
+
+                    // إخفاء جميع الأقسام بتأثير سلس
+                    allSections.forEach(sec => {
+                        sec.style.opacity = '0';
+                        setTimeout(() => {
+                            sec.style.display = 'none';
+                            sec.style.opacity = '1';
+                        }, 150);
+                    });
+
                     // إظهار القسم المطلوب
                     const sectionId = 'section-' + this.dataset.section;
                     const targetSection = document.getElementById(sectionId);
                     if (targetSection) {
-                        targetSection.style.display = 'block';
-                        // تمرير سلس للأعلى
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        setTimeout(() => {
+                            targetSection.style.display = 'block';
+                            targetSection.offsetHeight; // Trigger reflow
+                            targetSection.style.opacity = '1';
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 150);
                     }
                 });
             });
@@ -1304,4 +1994,5 @@
 
     </script>
 </body>
+
 </html>

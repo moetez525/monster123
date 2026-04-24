@@ -34,6 +34,23 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-red: #ff0000;
+            --dark-red: #9b2226;
+            --light-red: #ff6b6b;
+            --accent-red: #ff0000;
+
+            --black: #0a0a0a;
+            --dark-bg: #141414;
+            --card-bg: #1a1a1a;
+            --medium-gray: #2a2a2a;
+            --light-gray: #3a3a3a;
+
+            --white: #ffffff;
+            --off-white: #f5f5f5;
+            --text-gray: #b8b8b8;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -68,7 +85,7 @@
             width: 100%;
             height: 100%;
             background:
-                radial-gradient(ellipse at 10% 20%, #ff0000 0%, transparent 50%),
+                radial-gradient(ellipse at 10% 20%, var(--primary-red) 0%, transparent 50%),
                 radial-gradient(ellipse at 90% 80%, rgba(0, 242, 250, 0.03) 0%, transparent 50%),
                 radial-gradient(circle at 50% 50%, rgba(0, 242, 250, 0.03) 0%, transparent 40%);
             pointer-events: none;
@@ -152,7 +169,7 @@
             width: 100%;
             background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(30px) saturate(180%);
-            border-bottom: 1px solid #ff0000;
+            border-bottom: 1px solid var(--primary-red);
             z-index: 1000;
             padding: 0;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -161,7 +178,7 @@
         header.scrolled {
             background: rgba(10, 10, 10, 0.95);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            border-bottom-color: #ff0000;
+            border-bottom-color: var(--primary-red);
         }
 
         nav {
@@ -195,7 +212,7 @@
             font-size: 26px;
             color: var(--white);
             box-shadow:
-                0 10px 30px #ff0000,
+                var(--shadow-red),
                 inset 0 -2px 10px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
@@ -209,7 +226,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, #ff0000, transparent);
+            background: linear-gradient(45deg, transparent, var(--primary-red), transparent);
             transform: rotate(45deg);
             animation: shimmer 3s infinite;
         }
@@ -229,7 +246,7 @@
         .logo:hover .logo-icon {
             transform: translateY(-5px) rotate(-5deg);
             box-shadow:
-                0 15px 40px #ff0000,
+                var(--shadow-red),
                 inset 0 -2px 10px rgba(0, 0, 0, 0.3);
         }
 
@@ -336,7 +353,7 @@
         .shape {
             position: absolute;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ff0000, rgba(255, 69, 0, 0.05));
+            background: linear-gradient(135deg, var(--primary-red), rgba(255, 69, 0, 0.05));
             filter: blur(60px);
             animation: shapeFloat 20s ease-in-out infinite;
         }
@@ -413,7 +430,7 @@
             align-items: center;
             gap: 10px;
             background: rgba(0, 242, 250, 0.1);
-            border: 1px solid #ff0000;
+            border: 1px solid var(--border-glass);
             padding: 10px 20px;
             border-radius: 50px;
             font-size: 14px;
@@ -547,28 +564,40 @@
             background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
             color: var(--white);
             box-shadow:
-                0 10px 30px #ff0000,
+                var(--shadow-red),
                 inset 0 -2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow:
-                0 15px 40px #ff0000,
+                var(--shadow-red),
                 inset 0 -2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .btn-secondary {
-            background: #ff0000;
+            background: var(--primary-red);
             color: var(--white);
-            border: 2px solid #ff0000;
+            border: 2px solid var(--primary-red);
             backdrop-filter: blur(10px);
         }
 
         .btn-secondary:hover {
-            background: #ff0000;
+            background: var(--primary-red);
             border-color: var(--primary-red);
             transform: translateY(-3px);
+        }
+
+        .activation-btn {
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+            border-color: #10b981 !important;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .activation-btn:hover {
+            background: linear-gradient(135deg, #059669, #047857) !important;
+            border-color: #059669 !important;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.5);
         }
 
         .hero-visual {
@@ -609,7 +638,7 @@
         .server-logo {
             width: 85%;
             height: auto;
-            filter: drop-shadow(0 30px 80px #ff0000);
+            filter: drop-shadow(var(--shadow-red));
             animation: float 6s ease-in-out infinite;
             position: relative;
             z-index: 2;
@@ -643,9 +672,11 @@
         }
 
         .feature-card {
-            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(20, 20, 20, 0.8));
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid #ff0000;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
             border-radius: 24px;
             padding: 45px 35px;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -660,7 +691,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #ff0000, transparent);
+            background: linear-gradient(135deg, var(--primary-red), transparent);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -672,7 +703,7 @@
         .feature-card:hover {
             transform: translateY(-10px);
             border-color: var(--primary-red);
-            box-shadow: 0 20px 60px #ff0000;
+            box-shadow: var(--shadow-red);
         }
 
         .feature-icon {
@@ -686,7 +717,7 @@
             font-size: 30px;
             color: var(--white);
             margin-bottom: 25px;
-            box-shadow: 0 10px 30px #ff0000;
+            box-shadow: var(--shadow-red);
             transition: all 0.4s ease;
             position: relative;
             z-index: 2;
@@ -758,9 +789,11 @@
         }
 
         .rules-card {
-            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(20, 20, 20, 0.8));
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid #ff0000;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
             border-radius: 24px;
             padding: 35px 25px;
             text-align: center;
@@ -777,7 +810,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #ff0000, transparent);
+            background: linear-gradient(135deg, var(--primary-red), transparent);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -790,7 +823,7 @@
         .rules-card.open {
             transform: translateY(-10px);
             border-color: var(--primary-red);
-            box-shadow: 0 25px 70px #ff0000;
+            box-shadow: var(--shadow-red);
         }
 
         .rules-card-title {
@@ -828,7 +861,7 @@
             margin: 0 auto;
             background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(20, 20, 20, 0.9));
             backdrop-filter: blur(30px);
-            border: 1px solid #ff0000;
+            border: 1px solid var(--border-glass);
             border-radius: 30px;
             padding: 80px 60px;
             text-align: center;
@@ -844,7 +877,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, #ff0000 0%, transparent 70%);
+            background: radial-gradient(circle, var(--primary-red) 0%, transparent 70%);
             animation: rotateGlow 15s linear infinite;
         }
 
@@ -913,9 +946,11 @@
         }
 
         .admin-card {
-            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(20, 20, 20, 0.8));
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid #ff0000;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
             border-radius: 24px;
             padding: 45px 35px;
             text-align: center;
@@ -931,7 +966,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #ff0000, transparent);
+            background: linear-gradient(135deg, var(--primary-red), transparent);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
@@ -943,7 +978,7 @@
         .admin-card:hover {
             transform: translateY(-15px);
             border-color: var(--primary-red);
-            box-shadow: 0 25px 70px #ff0000;
+            box-shadow: var(--shadow-red);
         }
 
         .admin-image-wrapper {
@@ -994,7 +1029,7 @@
             margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 10px 25px #ff0000;
+            box-shadow: 0 10px 25px var(--primary-red);
             position: relative;
             z-index: 2;
         }
@@ -1053,7 +1088,7 @@
             background: linear-gradient(135deg, var(--card-bg), var(--dark-bg));
             margin: 5% auto;
             padding: 0;
-            border: 1px solid #ff0000;
+            border: 1px solid var(--border-glass);
             border-radius: 20px;
             width: 90%;
             max-width: 600px;
@@ -1100,7 +1135,7 @@
 
         .tab-btn {
             background: var(--card-bg);
-            border: 2px solid #ff0000;
+            border: 2px solid var(--primary-red);
             color: var(--white);
             padding: 12px 24px;
             border-radius: 25px;
@@ -1191,7 +1226,7 @@
             padding: 30px;
             border-radius: 15px;
             text-align: center;
-            border: 1px solid #ff0000;
+            border: 1px solid var(--border-glass);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
@@ -1302,6 +1337,7 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             animation: shimmer 2s infinite;
         }
+
         .tab-content {
             position: relative;
             overflow: hidden;
@@ -1311,6 +1347,7 @@
             0% {
                 box-shadow: 0 8px 25px rgba(255, 0, 0, 0.2);
             }
+
             100% {
                 box-shadow: 0 8px 25px rgba(0, 242, 250, 0.3);
             }
@@ -1320,6 +1357,7 @@
             0% {
                 left: -100%;
             }
+
             100% {
                 left: 100%;
             }
@@ -1337,9 +1375,12 @@
         }
 
         @keyframes iconPulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.1);
             }
@@ -1381,7 +1422,7 @@
         .form-group select {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid #ff0000;
+            border: 2px solid var(--primary-red);
             border-radius: 10px;
             background: var(--dark-bg);
             color: var(--white);
@@ -1430,7 +1471,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 30px 80px #ff0000;
+            box-shadow: var(--shadow-red);
         }
 
         .store-container::before {
@@ -1513,7 +1554,7 @@
 
         footer {
             background: var(--dark-bg);
-            border-top: 1px solid #ff0000;
+            border-top: 1px solid var(--primary-red);
             padding: 80px 60px 40px;
             position: relative;
             z-index: 2;
@@ -1640,7 +1681,7 @@
 
         .footer-bottom {
             padding-top: 40px;
-            border-top: 1px solid #ff0000;
+            border-top: 1px solid var(--primary-red);
             text-align: center;
         }
 
@@ -1679,7 +1720,7 @@
             visibility: hidden;
             transition: all 0.3s ease;
             z-index: 999;
-            box-shadow: 0 10px 30px #ff0000;
+            box-shadow: var(--shadow-red);
         }
 
         .scroll-top.visible {
@@ -1689,7 +1730,7 @@
 
         .scroll-top:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px #ff0000;
+            box-shadow: var(--shadow-red);
         }
 
         .fade-in-section {
@@ -1736,7 +1777,7 @@
                 padding: 40px 30px;
                 gap: 30px;
                 transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                border-left: 1px solid #ff0000;
+                border-left: 1px solid var(--primary-red);
                 box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
             }
 
@@ -1813,6 +1854,1030 @@
         ::selection {
             background: var(--primary-red);
             color: var(--white);
+        }
+
+        /* ===== Modern Activation Form Styles ===== */
+        .act-hero {
+            text-align: center;
+            padding: 30px 20px 25px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.04) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            margin-bottom: 30px;
+        }
+
+        .act-hero-glow {
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .act-hero-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .act-hero-title {
+            font-family: 'Changa', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .act-hero-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            line-height: 1.6;
+        }
+
+        /* Step Headers */
+        .act-step-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .act-step-badge {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Changa', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+        }
+
+        .act-step-title {
+            font-family: 'Changa', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .act-step-desc {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin: 2px 0 0;
+        }
+
+        /* Personal Info Fields */
+        .act-fields-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 10px;
+        }
+
+        .act-field {
+            position: relative;
+        }
+
+        .act-field label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--white);
+            font-size: 15px;
+        }
+
+        .act-field label i {
+            color: #10b981;
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .act-field input {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            background: rgba(16, 185, 129, 0.04);
+            color: var(--white);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .act-field input:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+            background: rgba(16, 185, 129, 0.06);
+        }
+
+        .act-field input::placeholder {
+            color: rgba(184, 184, 184, 0.4);
+        }
+
+        /* Divider */
+        .act-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .act-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
+        }
+
+        .act-divider-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #10b981;
+            font-size: 14px;
+        }
+
+        /* Scenario Cards */
+        .act-scenario-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(20, 20, 20, 0.9));
+            border: 1px solid rgba(58, 58, 58, 0.5);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .act-scenario-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #10b981, #059669);
+            border-radius: 0 16px 16px 0;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .act-scenario-card:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.08);
+        }
+
+        .act-scenario-card:hover::before {
+            opacity: 1;
+        }
+
+        .act-scenario-card.act-scenario-optional {
+            border-style: dashed;
+            opacity: 0.7;
+        }
+
+        .act-scenario-card.act-scenario-optional:hover {
+            opacity: 1;
+        }
+
+        .act-scenario-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .act-scenario-num {
+            font-family: 'Changa', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            min-width: 40px;
+        }
+
+        .act-scenario-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .act-scenario-tag i {
+            font-size: 11px;
+        }
+
+        .act-scenario-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 14px;
+            padding: 14px;
+            background: rgba(10, 10, 10, 0.4);
+            border-radius: 10px;
+            border-right: 3px solid rgba(16, 185, 129, 0.15);
+        }
+
+        .act-scenario-card textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid rgba(16, 185, 129, 0.15);
+            border-radius: 12px;
+            background: rgba(16, 185, 129, 0.03);
+            color: var(--white);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 70px;
+            transition: all 0.3s ease;
+        }
+
+        .act-scenario-card textarea:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .act-scenario-card textarea::placeholder {
+            color: rgba(184, 184, 184, 0.35);
+        }
+
+        /* Submit Area */
+        .act-submit-area {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(58, 58, 58, 0.3);
+        }
+
+        .act-submit-btn {
+            position: relative;
+            padding: 16px 50px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .act-submit-content {
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .act-submit-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .act-submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.45);
+        }
+
+        .act-submit-btn:hover .act-submit-glow {
+            width: 400px;
+            height: 400px;
+        }
+
+        .act-submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .act-submit-note {
+            margin-top: 14px;
+            font-size: 12px;
+            color: rgba(184, 184, 184, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .act-submit-note i {
+            font-size: 11px;
+        }
+
+        /* ===== Application Form Styles (Red Accent) ===== */
+        .app-hero {
+            text-align: center;
+            padding: 30px 20px 25px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.06) 0%, rgba(155, 34, 38, 0.04) 100%);
+            border: 1px solid rgba(255, 0, 0, 0.12);
+            margin-bottom: 30px;
+        }
+
+        .app-hero-glow {
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .app-hero-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.25);
+            position: relative;
+            z-index: 2;
+        }
+
+        .app-hero-title {
+            font-family: 'Changa', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .app-hero-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            line-height: 1.6;
+        }
+
+        .app-step-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .app-step-badge {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Changa', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+        }
+
+        .app-step-title {
+            font-family: 'Changa', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .app-step-desc {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin: 2px 0 0;
+        }
+
+        .app-fields-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 10px;
+        }
+
+        .app-field {
+            position: relative;
+        }
+
+        .app-field label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--white);
+            font-size: 15px;
+        }
+
+        .app-field label i {
+            color: var(--primary-red);
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .app-field input,
+        .app-field select {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid rgba(255, 0, 0, 0.15);
+            border-radius: 12px;
+            background: rgba(255, 0, 0, 0.03);
+            color: var(--white);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .app-field input:focus,
+        .app-field select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+            background: rgba(255, 0, 0, 0.04);
+        }
+
+        .app-field input::placeholder {
+            color: rgba(184, 184, 184, 0.4);
+        }
+
+        .app-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .app-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.2), transparent);
+        }
+
+        .app-divider-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 0, 0, 0.08);
+            border: 1px solid rgba(255, 0, 0, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-red);
+            font-size: 14px;
+        }
+
+        .app-detail-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(20, 20, 20, 0.9));
+            border: 1px solid rgba(58, 58, 58, 0.5);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-red), var(--dark-red));
+            border-radius: 0 16px 16px 0;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .app-detail-card:hover {
+            border-color: rgba(255, 0, 0, 0.25);
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.06);
+        }
+
+        .app-detail-card:hover::before {
+            opacity: 1;
+        }
+
+        .app-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-weight: 600;
+            color: var(--white);
+            font-size: 15px;
+        }
+
+        .app-detail-header i {
+            color: var(--primary-red);
+            font-size: 16px;
+        }
+
+        .app-detail-card textarea,
+        .app-detail-card select {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid rgba(255, 0, 0, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 0, 0, 0.02);
+            color: var(--white);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 70px;
+            transition: all 0.3s ease;
+        }
+
+        .app-detail-card select {
+            min-height: auto;
+        }
+
+        .app-detail-card textarea:focus,
+        .app-detail-card select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.08);
+            background: rgba(255, 0, 0, 0.03);
+        }
+
+        .app-detail-card textarea::placeholder {
+            color: rgba(184, 184, 184, 0.35);
+        }
+
+        .app-submit-area {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(58, 58, 58, 0.3);
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-submit-btn {
+            position: relative;
+            padding: 16px 40px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white;
+            box-shadow: 0 8px 30px rgba(255, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .app-submit-content {
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .app-submit-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .app-submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 0, 0, 0.4);
+        }
+
+        .app-submit-btn:hover .app-submit-glow {
+            width: 400px;
+            height: 400px;
+        }
+
+        .app-cancel-btn {
+            padding: 16px 30px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Tajawal', sans-serif;
+            border: 2px solid rgba(58, 58, 58, 0.5);
+            border-radius: 50px;
+            cursor: pointer;
+            background: transparent;
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .app-cancel-btn:hover {
+            border-color: rgba(255, 0, 0, 0.3);
+            color: var(--white);
+            background: rgba(255, 0, 0, 0.05);
+        }
+
+        /* ===== Transfer Form Styles (Amber Accent) ===== */
+        .tfr-hero {
+            text-align: center;
+            padding: 30px 20px 25px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(217, 119, 6, 0.04) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            margin-bottom: 30px;
+        }
+
+        .tfr-hero-glow {
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .tfr-hero-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .tfr-hero-title {
+            font-family: 'Changa', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #f59e0b;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tfr-hero-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            line-height: 1.6;
+        }
+
+        .tfr-step-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .tfr-step-badge {
+            width: 38px;
+            height: 38px;
+            min-width: 38px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Changa', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.25);
+        }
+
+        .tfr-step-title {
+            font-family: 'Changa', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .tfr-step-desc {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin: 2px 0 0;
+        }
+
+        .tfr-fields-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 10px;
+        }
+
+        .tfr-select-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 500px) {
+            .tfr-select-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tfr-field {
+            position: relative;
+        }
+
+        .tfr-field label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--white);
+            font-size: 15px;
+        }
+
+        .tfr-field label i {
+            color: #f59e0b;
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .tfr-field input,
+        .tfr-field select {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid rgba(245, 158, 11, 0.15);
+            border-radius: 12px;
+            background: rgba(245, 158, 11, 0.03);
+            color: var(--white);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .tfr-field input:focus,
+        .tfr-field select:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.12);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .tfr-field input::placeholder {
+            color: rgba(184, 184, 184, 0.4);
+        }
+
+        .tfr-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .tfr-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.25), transparent);
+        }
+
+        .tfr-divider-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f59e0b;
+            font-size: 14px;
+        }
+
+        .tfr-detail-card {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(20, 20, 20, 0.9));
+            border: 1px solid rgba(58, 58, 58, 0.5);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tfr-detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #f59e0b, #d97706);
+            border-radius: 0 16px 16px 0;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .tfr-detail-card:hover {
+            border-color: rgba(245, 158, 11, 0.25);
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.06);
+        }
+
+        .tfr-detail-card:hover::before {
+            opacity: 1;
+        }
+
+        .tfr-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-weight: 600;
+            color: var(--white);
+            font-size: 15px;
+        }
+
+        .tfr-detail-header i {
+            color: #f59e0b;
+            font-size: 16px;
+        }
+
+        .tfr-detail-card textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border: 2px solid rgba(245, 158, 11, 0.12);
+            border-radius: 12px;
+            background: rgba(245, 158, 11, 0.02);
+            color: var(--white);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 70px;
+            transition: all 0.3s ease;
+        }
+
+        .tfr-detail-card textarea:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+            background: rgba(245, 158, 11, 0.03);
+        }
+
+        .tfr-detail-card textarea::placeholder {
+            color: rgba(184, 184, 184, 0.35);
+        }
+
+        .tfr-submit-area {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(58, 58, 58, 0.3);
+        }
+
+        .tfr-submit-btn {
+            position: relative;
+            padding: 16px 50px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .tfr-submit-content {
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tfr-submit-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .tfr-submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(245, 158, 11, 0.45);
+        }
+
+        .tfr-submit-btn:hover .tfr-submit-glow {
+            width: 400px;
+            height: 400px;
+        }
+
+        .tfr-submit-note {
+            margin-top: 14px;
+            font-size: 12px;
+            color: rgba(184, 184, 184, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .tfr-submit-note i {
+            font-size: 11px;
         }
     </style>
 </head>
@@ -1999,7 +3064,7 @@
             <h2 class="section-title">القوانين</h2>
             <p class="section-subtitle">انقر على أي بطاقة لعرض مجموعة القواعد المتعلقة بها</p>
             <div class="rules-grid">
-                
+
                 <div class="rules-card">
                     <h3 class="rules-card-title">📋 القوانين العامة</h3>
                     <ul class="rules-list" id="rulesGeneralList">
@@ -2065,6 +3130,11 @@
                     <i class="fab fa-discord"></i>
                     انضم لدسكورد
                 </button>
+
+                <button class="btn btn-secondary connect-btn activation-btn" id="openActivationBtn">
+                    <i class="fas fa-check-circle"></i>
+                    التفعيل الإلكتروني
+                </button>
             </div>
         </div>
     </section>
@@ -2084,7 +3154,7 @@
 
             <div class="admins-grid" id="owners-grid">
             </div>
-                <!-- WEB DEVLOPPER -->
+            <!-- WEB DEVLOPPER -->
 
             <h3 class="section-title" style="font-size: 42px; margin-top: 50px;">فريق المؤسسين </h3>
             <p class="section-subtitle">تعرف على رؤساءنا التنفيذيين المسؤولين عن إدارة وتوجيه السيرفر.</p>
@@ -2401,6 +3471,7 @@
             const modal = document.getElementById('applicationModal');
             const successModal = document.getElementById('successModal');
             const applyBtn = document.querySelector('.apply-admin-container .btn');
+            const openActivationBtn = document.getElementById('openActivationBtn');
             const closeBtn = document.querySelector('.modal-close');
             const cancelBtn = document.getElementById('cancelBtn');
             const successCloseBtn = document.getElementById('successCloseBtn');
@@ -2409,17 +3480,37 @@
             const tabContents = document.querySelectorAll('.tab-content');
 
             // Open modal
-            applyBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            });
+            if (applyBtn) {
+                applyBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (modal) modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            if (openActivationBtn) {
+                openActivationBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const actModal = document.getElementById('activationModal');
+                    if (actModal) {
+                        actModal.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        alert("عذراً، لم يتم العثور على نافذة التفعيل. يرجى تحديث الصفحة.");
+                        console.error("activationModal not found in DOM");
+                    }
+                });
+            }
 
             // Close modal functions
             function closeModal() {
-                modal.style.display = 'none';
+                if (modal) modal.style.display = 'none';
+                const actModal = document.getElementById('activationModal');
+                if (actModal) actModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
-                applicationForm.reset();
+                if (applicationForm) applicationForm.reset();
+                const actForm = document.getElementById('activationForm');
+                if (actForm) actForm.reset();
                 // Reset to first tab
                 switchTab('apply');
             }
@@ -2430,13 +3521,16 @@
                 closeModal(); // Also close the application modal
             }
 
-            closeBtn.addEventListener('click', closeModal);
-            cancelBtn.addEventListener('click', closeModal);
-            successCloseBtn.addEventListener('click', closeSuccessModal);
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            const activationCloseBtn = document.querySelector('.activation-close');
+            if (activationCloseBtn) activationCloseBtn.addEventListener('click', closeModal);
+            if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+            if (successCloseBtn) successCloseBtn.addEventListener('click', closeSuccessModal);
 
             // Close modals when clicking outside
             window.addEventListener('click', (e) => {
-                if (e.target === modal) {
+                const actModal = document.getElementById('activationModal');
+                if (e.target === modal || e.target === actModal) {
                     closeModal();
                 }
                 if (e.target === successModal) {
@@ -2546,6 +3640,51 @@
                         alert("❌ حدث خطأ أثناء إرسال الطلب.");
                     });
             });
+
+            const activationForm = document.getElementById('activationForm');
+            if (activationForm) {
+                activationForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(activationForm);
+                    const data = Object.fromEntries(formData);
+
+                    const discordIdFull = data.discordIdFull || "";
+                    const discordId = discordIdFull.split('|').pop().trim() || "";
+
+                    const webhookURL = "https://discord.com/api/webhooks/1497263711625281617/sDdyncFNf_lNyXznnEa5hpKzSsgGDAQgReWykDW4NESIA84M4n-SdGPvscEcE-O8Y1ow";
+
+                    fetch(webhookURL, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            content: discordId ? `<@${discordId}>` : '@here',
+                            embeds: [{
+                                title: "✅ طلب تفعيل إلكتروني جديد",
+                                color: 16744192,
+                                fields: [
+                                    { name: "📛 الاسم الثلاثي", value: data.fullName || "غير موجود", inline: false },
+                                    { name: "🆔 معرف الدسكورد", value: data.discordIdFull || "غير موجود", inline: false },
+                                    { name: "📅 العمر وتاريخ الميلاد", value: data.ageAndDob || "غير موجود", inline: false },
+                                    { name: "📝 سيناريو 1", value: data.scenario1 || "غير موجود", inline: false },
+                                    { name: "📝 سيناريو 2", value: data.scenario2 || "غير موجود", inline: false },
+                                    { name: "📝 سيناريو 3", value: data.scenario3 || "غير موجود", inline: false },
+                                    { name: "📝 سيناريو 4", value: data.scenario4 || "غير موجود", inline: false },
+                                    { name: "📝 سيناريو 5", value: data.scenario5 || "لا يوجد", inline: false }
+                                ],
+                                footer: { text: "Real Life CFW - نظام التفعيل الإلكتروني" },
+                                timestamp: new Date()
+                            }]
+                        })
+                    })
+                        .then(() => {
+                            document.getElementById('successModal').style.display = 'block';
+                            activationForm.reset();
+                        })
+                        .catch(() => {
+                            alert("❌ حدث خطأ أثناء إرسال الطلب.");
+                        });
+                });
+            }
         });
 
 
@@ -2569,182 +3708,492 @@
             </div>
             <div class="modal-body">
                 <div class="tab-content active" id="apply-content">
+                    <!-- Modern Apply Header -->
+                    <div class="app-hero">
+                        <div class="app-hero-glow"></div>
+                        <div class="app-hero-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h4 class="app-hero-title">التقديم على الإدارة</h4>
+                        <p class="app-hero-desc">أكمل جميع البيانات المطلوبة بدقة للنظر في طلبك</p>
+                    </div>
+
                     <form id="applicationForm">
-                        <div class="form-group">
-                            <label for="discordId">ديسكورد ID</label>
-                            <input type="text" id="discordId" name="discordId" required>
+                        <!-- Step 1: Identity -->
+                        <div class="app-step-header">
+                            <div class="app-step-badge">1</div>
+                            <div>
+                                <h5 class="app-step-title">معلومات الهوية</h5>
+                                <p class="app-step-desc">بيانات التعريف الأساسية</p>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="username">يوزرك</label>
-                            <input type="text" id="username" name="username" required>
+
+                        <div class="app-fields-grid">
+                            <div class="app-field">
+                                <label for="discordId">
+                                    <i class="fab fa-discord"></i>
+                                    ديسكورد ID
+                                </label>
+                                <input type="text" id="discordId" name="discordId"
+                                    placeholder="مثال: 123456789012345678" required>
+                            </div>
+                            <div class="app-field">
+                                <label for="username">
+                                    <i class="fas fa-at"></i>
+                                    يوزرك
+                                </label>
+                                <input type="text" id="username" name="username" placeholder="مثال: Faisal#0001"
+                                    required>
+                            </div>
+                            <div class="app-field">
+                                <label for="name">
+                                    <i class="fas fa-user"></i>
+                                    الاسم
+                                </label>
+                                <input type="text" id="name" name="name" placeholder="مثال: فيصل" required>
+                            </div>
+                            <div class="app-field">
+                                <label for="age">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    العمر
+                                </label>
+                                <input type="number" id="age" name="age" min="16" max="99" placeholder="مثال: 22"
+                                    required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="name">الاسم</label>
-                            <input type="text" id="name" name="name" required>
+
+                        <div class="app-divider">
+                            <span class="app-divider-line"></span>
+                            <span class="app-divider-icon"><i class="fas fa-briefcase"></i></span>
+                            <span class="app-divider-line"></span>
                         </div>
-                        <div class="form-group">
-                            <label for="age">العمر</label>
-                            <input type="number" id="age" name="age" min="16" max="99" required>
+
+                        <!-- Step 2: Experience -->
+                        <div class="app-step-header">
+                            <div class="app-step-badge">2</div>
+                            <div>
+                                <h5 class="app-step-title">الخبرة والتفاصيل</h5>
+                                <p class="app-step-desc">أخبرنا عن خبراتك وسبب تقديمك</p>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="experience">الخبرات الإدارية</label>
-                            <textarea id="experience" name="experience" rows="3" required></textarea>
+
+                        <div class="app-detail-card">
+                            <div class="app-detail-header">
+                                <i class="fas fa-award"></i>
+                                <span>الخبرات الإدارية</span>
+                            </div>
+                            <textarea id="experience" name="experience" rows="3"
+                                placeholder="✍️ اذكر خبراتك الإدارية السابقة بالتفصيل..." required></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="reason">سبب التقديم</label>
-                            <textarea id="reason" name="reason" rows="3" required></textarea>
+
+                        <div class="app-detail-card">
+                            <div class="app-detail-header">
+                                <i class="fas fa-comment-dots"></i>
+                                <span>سبب التقديم</span>
+                            </div>
+                            <textarea id="reason" name="reason" rows="3"
+                                placeholder="✍️ لماذا تريد الانضمام لفريق الإدارة؟" required></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="previousAdmin">هل كنت إداري في سيرفر آخر؟</label>
+
+                        <div class="app-detail-card">
+                            <div class="app-detail-header">
+                                <i class="fas fa-history"></i>
+                                <span>هل كنت إداري في سيرفر آخر؟</span>
+                            </div>
                             <select id="previousAdmin" name="previousAdmin" required>
-                                <option value="">اختر...</option>
-                                <option value="yes">نعم</option>
-                                <option value="no">لا</option>
+                                <option value="">اختر الإجابة...</option>
+                                <option value="yes">نعم، كنت إداري سابقاً</option>
+                                <option value="no">لا، هذه أول مرة</option>
                             </select>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">إرسال الطلب</button>
-                            <button type="button" class="btn btn-secondary" id="cancelBtn">إلغاء</button>
+
+                        <div class="app-submit-area">
+                            <button type="submit" class="app-submit-btn">
+                                <span class="app-submit-content">
+                                    <i class="fas fa-paper-plane"></i>
+                                    إرسال الطلب
+                                </span>
+                                <span class="app-submit-glow"></span>
+                            </button>
+                            <button type="button" class="app-cancel-btn" id="cancelBtn">
+                                <i class="fas fa-times"></i>
+                                إلغاء
+                            </button>
                         </div>
                     </form>
                 </div>
 
                 <div class="tab-content" id="transfer-content">
-                    <div class="transfer-notice">
-                        <div class="notice-icon">
-                            <i class="fas fa-info-circle"></i>
+                    <!-- Modern Transfer Header -->
+                    <div class="tfr-hero">
+                        <div class="tfr-hero-glow"></div>
+                        <div class="tfr-hero-icon">
+                            <i class="fas fa-exchange-alt"></i>
                         </div>
-                        <div class="notice-content">
-                            <h4>إعلان مهم</h4>
-                            <p>تم فتح النقل لسيرفر ريل لايف اتمنى من عموم الاشخاص الناقلين تعبئة الاستبيان بشكل صحيح (واي تلاعب بالأجوبة يؤدي الى الرفض بشكل فوري)❤️</p>
-                        </div>
+                        <h4 class="tfr-hero-title">النقل الإداري</h4>
+                        <p class="tfr-hero-desc">تم فتح النقل لسيرفر ريل لايف — يرجى تعبئة الاستبيان بشكل صحيح (أي تلاعب
+                            بالأجوبة يؤدي للرفض فوراً) ❤️</p>
                     </div>
+
                     <form id="transferForm" class="transfer-form">
-                        <div class="form-group">
-                            <label for="transfer-name-age">الاسم + العمر (+17) ⚠️</label>
-                            <input type="text" id="transfer-name-age" name="nameAge" placeholder="مثال: Faisal, 25" required>
+                        <!-- Step 1: Basic Info -->
+                        <div class="tfr-step-header">
+                            <div class="tfr-step-badge">1</div>
+                            <div>
+                                <h5 class="tfr-step-title">المعلومات الأساسية</h5>
+                                <p class="tfr-step-desc">بياناتك الشخصية ومعلومات السيرفر السابق</p>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="transfer-server-link">رابط أو اختصار السيرفر الذي تأتي منه (Discord)</label>
-                            <input type="text" id="transfer-server-link" name="serverLink" placeholder="مثال: https://discord.gg/rl0 أو rl0" required>
+
+                        <div class="tfr-fields-grid">
+                            <div class="tfr-field">
+                                <label for="transfer-name-age">
+                                    <i class="fas fa-user"></i>
+                                    الاسم + العمر (+17) ⚠️
+                                </label>
+                                <input type="text" id="transfer-name-age" name="nameAge" placeholder="مثال: Faisal, 25"
+                                    required>
+                            </div>
+                            <div class="tfr-field">
+                                <label for="transfer-server-link">
+                                    <i class="fas fa-link"></i>
+                                    رابط أو اختصار السيرفر السابق
+                                </label>
+                                <input type="text" id="transfer-server-link" name="serverLink"
+                                    placeholder="مثال: https://discord.gg/rl0 أو rl0" required>
+                            </div>
+                            <div class="tfr-field">
+                                <label for="transfer-discord-id">
+                                    <i class="fab fa-discord"></i>
+                                    معرف الدسكورد مع الاسم
+                                </label>
+                                <input type="text" id="transfer-discord-id" name="discordIdFull"
+                                    placeholder="مثال: Faisal |744335721816522783" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="transfer-discord-id">معرف الدسكورد الخاص بك مع الاسم (ID الكامل)</label>
-                            <input type="text" id="transfer-discord-id" name="discordIdFull" placeholder="مثال: Faisal |744335721816522783" required>
+
+                        <div class="tfr-select-row">
+                            <div class="tfr-field">
+                                <label for="transfer-discord-members">
+                                    <i class="fas fa-users"></i>
+                                    عدد أعضاء الدسكورد ⚠️
+                                </label>
+                                <select id="transfer-discord-members" name="discordMembers" required>
+                                    <option value="">اختر...</option>
+                                    <option value="أكثر من 1500">أكثر من 1500 عضو</option>
+                                    <option value="أقل من 1500">أقل من 1500 عضو</option>
+                                </select>
+                            </div>
+                            <div class="tfr-field">
+                                <label for="transfer-daily-players">
+                                    <i class="fas fa-gamepad"></i>
+                                    متوسط اللاعبين اليومي ⚠️
+                                </label>
+                                <select id="transfer-daily-players" name="dailyPlayers" required>
+                                    <option value="">اختر...</option>
+                                    <option value="أكثر من 50 لاعب">أكثر من 50 لاعب يومياً</option>
+                                    <option value="أقل من 50 لاعب">أقل من 50 لاعب يومياً</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="transfer-discord-members">عدد أعضاء الدسكورد في السيرفر السابق ⚠️</label>
-                            <select id="transfer-discord-members" name="discordMembers" required>
-                                <option value="">اختر...</option>
-                                <option value="أكثر من 1500">أكثر من 1500 عضو</option>
-                                <option value="أقل من 1500">أقل من 1500 عضو</option>
-                            </select>
+
+                        <div class="tfr-divider">
+                            <span class="tfr-divider-line"></span>
+                            <span class="tfr-divider-icon"><i class="fas fa-clipboard-list"></i></span>
+                            <span class="tfr-divider-line"></span>
                         </div>
-                        <div class="form-group">
-                            <label for="transfer-daily-players">متوسط عدد اللاعبين اليومي داخل السيرفر ⚠️</label>
-                            <select id="transfer-daily-players" name="dailyPlayers" required>
-                                <option value="">اختر...</option>
-                                <option value="أكثر من 50 لاعب">أكثر من 50 لاعب يومياً</option>
-                                <option value="أقل من 50 لاعب">أقل من 50 لاعب يومياً</option>
-                            </select>
+
+                        <!-- Step 2: Experience Details -->
+                        <div class="tfr-step-header">
+                            <div class="tfr-step-badge">2</div>
+                            <div>
+                                <h5 class="tfr-step-title">التفاصيل والخبرات</h5>
+                                <p class="tfr-step-desc">أخبرنا عن رتبتك ومسؤولياتك السابقة</p>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="transfer-rank">رتبتك بالسيرفر السابق مع كامل الأدلة ❗️</label>
-                            <textarea id="transfer-rank" name="rank" rows="3" placeholder="اذكر رتبتك والأدلة على ذلك" required></textarea>
+
+                        <div class="tfr-detail-card">
+                            <div class="tfr-detail-header">
+                                <i class="fas fa-medal"></i>
+                                <span>رتبتك بالسيرفر السابق مع الأدلة ❗️</span>
+                            </div>
+                            <textarea id="transfer-rank" name="rank" rows="3"
+                                placeholder="✍️ اذكر رتبتك والأدلة على ذلك..." required></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="transfer-responsibility">هل فيه مسؤولية كنت تتولاها بالسيرفر السابق؟</label>
-                            <textarea id="transfer-responsibility" name="responsibility" rows="3" placeholder="اذكر المسؤولية بالتفصيل" required></textarea>
+
+                        <div class="tfr-detail-card">
+                            <div class="tfr-detail-header">
+                                <i class="fas fa-tasks"></i>
+                                <span>المسؤوليات في السيرفر السابق</span>
+                            </div>
+                            <textarea id="transfer-responsibility" name="responsibility" rows="3"
+                                placeholder="✍️ اذكر المسؤولية بالتفصيل..." required></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="transfer-contribution">ماذا ستضيف للسيرفر خلال أول فترة لك؟</label>
-                            <textarea id="transfer-contribution" name="contribution" rows="3" placeholder="اشرح ما ستساهم به في السيرفر" required></textarea>
+
+                        <div class="tfr-detail-card">
+                            <div class="tfr-detail-header">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>ماذا ستضيف للسيرفر؟</span>
+                            </div>
+                            <textarea id="transfer-contribution" name="contribution" rows="3"
+                                placeholder="✍️ اشرح ما ستساهم به في السيرفر..." required></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="transfer-why">عطني سبب نقبلك أنت ولا نقبل غيرك؟!</label>
-                            <textarea id="transfer-why" name="whyYou" rows="3" placeholder="اشرح لماذا يجب أن نختارك" required></textarea>
+
+                        <div class="tfr-detail-card">
+                            <div class="tfr-detail-header">
+                                <i class="fas fa-star"></i>
+                                <span>لماذا نقبلك أنت ولا نقبل غيرك؟!</span>
+                            </div>
+                            <textarea id="transfer-why" name="whyYou" rows="3"
+                                placeholder="✍️ اشرح لماذا يجب أن نختارك..." required></textarea>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-secondary">إرسال الطلب</button>
+
+                        <div class="tfr-submit-area">
+                            <button type="submit" class="tfr-submit-btn">
+                                <span class="tfr-submit-content">
+                                    <i class="fas fa-paper-plane"></i>
+                                    إرسال طلب النقل
+                                </span>
+                                <span class="tfr-submit-glow"></span>
+                            </button>
+                            <p class="tfr-submit-note"><i class="fas fa-info-circle"></i> سيتم مراجعة طلبك والتواصل معك
+                                عبر الدسكورد</p>
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
-        <!-- Success Modal -->
-        <div id="successModal" class="modal">
-            <div class="modal-content success-modal-content">
-                <div class="success-content">
-                    <div class="success-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>تم بنجاح!</h3>
-                    <p>تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.</p>
-                    <button class="btn btn-primary" id="successCloseBtn">موافق</button>
+
+                <div class="tab-content" id="activation-content" style="display: none;">
+                    <!-- Content moved to activationModal -->
                 </div>
             </div>
         </div>
-        <script type="module">
-            import { db, doc, onSnapshot, collection, query, orderBy } from './admin.js';
+    </div>
 
-            // 1. كود القوانين والأزرار (المحدث للتحكم في البطاقات والمودال معاً)
-            onSnapshot(doc(db, "settings", "siteConfig"), (snap) => {
-                if (snap.exists()) {
-                    const data = snap.data();
-                    const fmt = (text) => {
-                        if (!text) return "<li>قريباً...</li>";
-                        return text.split('\n').filter(line => line.trim() !== "").map(line => `<li>${line}</li>`).join('');
-                    };
+    <!-- Activation Modal -->
+    <div id="activationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3
+                    style="font-family: 'Changa', sans-serif; font-size: 24px; font-weight: 700; width: 100%; text-align: center; margin: 0; color: white;">
+                    التفعيل الإلكتروني</h3>
+                <span class="modal-close activation-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <!-- Modern Activation Header -->
+                <div class="act-hero">
+                    <div class="act-hero-glow"></div>
+                    <div class="act-hero-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h4 class="act-hero-title">استمارة التفعيل الإلكتروني</h4>
+                    <p class="act-hero-desc">أجب على جميع الأسئلة والسيناريوهات بدقة تامة لإتمام عملية التفعيل</p>
+                </div>
 
-                    const generalList = document.getElementById('rulesGeneralList');
-                    const greenZoneList = document.getElementById('rulesGreenZoneList');
-                    const heistList = document.getElementById('rulesHeistList');
-                    const shootoutList = document.getElementById('rulesShootoutList');
+                <form id="activationForm" class="transfer-form">
+                    <!-- Step 1: Personal Info -->
+                    <div class="act-step-header">
+                        <div class="act-step-badge">1</div>
+                        <div>
+                            <h5 class="act-step-title">المعلومات الشخصية</h5>
+                            <p class="act-step-desc">أدخل بياناتك الأساسية</p>
+                        </div>
+                    </div>
 
-                    if(generalList) generalList.innerHTML = fmt(data.rulesGeneral);
-                    if(greenZoneList) greenZoneList.innerHTML = fmt(data.rulesGreenZone);
-                    if(heistList) heistList.innerHTML = fmt(data.rulesHeist);
-                    if(shootoutList) shootoutList.innerHTML = fmt(data.rulesShootout);
+                    <div class="act-fields-grid">
+                        <div class="act-field">
+                            <label for="activation-fullname">
+                                <i class="fas fa-user"></i>
+                                اسمك الثلاثي
+                            </label>
+                            <input type="text" id="activation-fullname" name="fullName"
+                                placeholder="مثال: محمد عبدالله خالد" required>
+                        </div>
+                        <div class="act-field">
+                            <label for="activation-discord-id">
+                                <i class="fab fa-discord"></i>
+                                معرف الدسكورد مع الاسم
+                            </label>
+                            <input type="text" id="activation-discord-id" name="discordIdFull"
+                                placeholder="مثال: Mohammed | 123456789012345678" required>
+                        </div>
+                        <div class="act-field">
+                            <label for="activation-age">
+                                <i class="fas fa-calendar-alt"></i>
+                                عمرك مع تاريخ ميلادك
+                            </label>
+                            <input type="text" id="activation-age" name="ageAndDob"
+                                placeholder="مثال: 20 سنة - 01/01/2004" required>
+                        </div>
+                    </div>
 
-                    // --- الوظيفة المحدثة لإظهار الرسالة فوق التغبيش ---
-                    const applyConfig = (type, status, selector, contentId, text, customMsg) => {
-                        const btn = document.querySelector(selector);
-                        const content = document.getElementById(contentId);
-                        const card = btn ? btn.closest('.join-card, .transfer-card') : null;
+                    <div class="act-divider">
+                        <span class="act-divider-line"></span>
+                        <span class="act-divider-icon"><i class="fas fa-scroll"></i></span>
+                        <span class="act-divider-line"></span>
+                    </div>
 
-                        // إزالة أي رسائل قفل قديمة
-                        if (card) card.parentElement.querySelectorAll('.transfer-closed-message').forEach(m => m.remove());
-                        if (content) content.querySelectorAll('.transfer-closed-message').forEach(m => m.remove());
+                    <!-- Step 2: Scenarios -->
+                    <div class="act-step-header">
+                        <div class="act-step-badge">2</div>
+                        <div>
+                            <h5 class="act-step-title">أسئلة السيناريوهات</h5>
+                            <p class="act-step-desc">اقرأ كل سيناريو بعناية واذكر الأخطاء الموجودة فيه</p>
+                        </div>
+                    </div>
 
-                        if (status === 'closed') {
-                            // تأثير الإغلاق على البطاقة في الصفحة
-                            if (card) {
-                                card.style.filter = 'blur(6px)';
-                                card.style.pointerEvents = 'none';
-                                card.style.opacity = '0.5';
-                                card.style.zIndex = '5';
+                    <div class="act-scenario-card">
+                        <div class="act-scenario-header">
+                            <div class="act-scenario-num">01</div>
+                            <div class="act-scenario-tag"><i class="fas fa-store"></i> سرقة بقالة</div>
+                        </div>
+                        <p class="act-scenario-text">خططت انت وثلاث من اخوياك سرقه بقاله وفي نص الطريق حصلتو رهينه وكان
+                            فيه مدنين هددتو وخطفتوه وثم توجهتو الى البقاله وتوجهو لكم العسكر وطلبتو على الرهينه خروج امن
+                            و 1500 دولار وافقو العسكر وخرجتو وعلى طول العسكر طلقو على كفراتكم وانحشتو وانتهى السيناريو.
+                        </p>
+                        <textarea name="scenario1" rows="3"
+                            placeholder="✍️ اذكر الأخطاء التي وجدتها في هذا السيناريو..." required></textarea>
+                    </div>
 
-                                const closedHTML = `
+                    <div class="act-scenario-card">
+                        <div class="act-scenario-header">
+                            <div class="act-scenario-num">02</div>
+                            <div class="act-scenario-tag"><i class="fas fa-gem"></i> سرقة مجوهرات</div>
+                        </div>
+                        <p class="act-scenario-text">كان يوجد 6 اشخاص راح يسرقون مجوهرات و قامو بخطف رهينه واحده و عينو
+                            واحد من الاشخاص تدخل خارجي و الباقين راح يكونون متواجدين في المجوهرات بدات عملية السرقه و
+                            توجهو الشرطة و طلبو الاشخاص هروب امن على الرهينه فقط تم قبول مطلبهم من قبل الشرطه و خرجو
+                            هروب امن تواصلو الاشخاص مع خويهم التدخل الخارجي عن طريق الموجه عشان ينتظرهم عند الشاطئ قامو
+                            الاشخاص بنط بلمركبه الى البحر و سبحو الين وصلو عند خويهم التدخل الخارجي و ركبو معه و وانحاشو
+                            و انتهى السيناريو.</p>
+                        <textarea name="scenario2" rows="3"
+                            placeholder="✍️ اذكر الأخطاء التي وجدتها في هذا السيناريو..." required></textarea>
+                    </div>
+
+                    <div class="act-scenario-card">
+                        <div class="act-scenario-header">
+                            <div class="act-scenario-num">03</div>
+                            <div class="act-scenario-tag"><i class="fas fa-taxi"></i> خطف تاكسي</div>
+                        </div>
+                        <p class="act-scenario-text">كنت انت وخويك مقطوعين في ساندي وقمتو بطلب عبر تطبيق التاكسي واثناء
+                            وصولة كان بمركبة مدنية وقررتم تهديده واخذ مفتاح المركبة وبعدها خطفة وعند ركوبكم السيارة
+                            توجهتو لبقاله ساندي وتوضح لكم عدم وجود شرطة واطلقتو سراحة وتركتوة في نصف الطريق وانتهى
+                            السيناريو.</p>
+                        <textarea name="scenario3" rows="3"
+                            placeholder="✍️ اذكر الأخطاء التي وجدتها في هذا السيناريو..." required></textarea>
+                    </div>
+
+                    <div class="act-scenario-card">
+                        <div class="act-scenario-header">
+                            <div class="act-scenario-num">04</div>
+                            <div class="act-scenario-tag"><i class="fas fa-home"></i> سرقة منزل</div>
+                        </div>
+                        <p class="act-scenario-text">توجهت انت واربعة أشخاص إلى سرقة منزل كبير بالشمال وكانت لديكم
+                            رهينتان وطلبتوا على الرهينة الأولى مبلغ 1500 والرهينة الأخرى خروج آمن وتمت الموافقة على
+                            متطلباتكم وخرجتوا من الموقع وتوجهتو لميترو وحصل شوت فاير وتم اسقاط عموم العسكر وخويكم اسقط
+                            توجهتو للمستشفى لمعالجته وكان يوجد عسكري بالمسشتفى وتذكركم وحاول يمسكم ولكن هربتو وانتهى
+                            السيناريو.</p>
+                        <textarea name="scenario4" rows="3"
+                            placeholder="✍️ اذكر الأخطاء التي وجدتها في هذا السيناريو..." required></textarea>
+                    </div>
+
+                    <div class="act-scenario-card act-scenario-optional">
+                        <div class="act-scenario-header">
+                            <div class="act-scenario-num">05</div>
+                            <div class="act-scenario-tag"><i class="fas fa-plus-circle"></i> إضافي (اختياري)</div>
+                        </div>
+                        <p class="act-scenario-text" style="color: rgba(184,184,184,0.6); font-style: italic;">إذا كان
+                            لديك سيناريو إضافي تود إضافته، اكتبه هنا.</p>
+                        <textarea name="scenario5" rows="3" placeholder="✍️ اذكر الأخطاء هنا... (اختياري)"></textarea>
+                    </div>
+
+                    <div class="act-submit-area">
+                        <button type="submit" class="act-submit-btn">
+                            <span class="act-submit-content">
+                                <i class="fas fa-paper-plane"></i>
+                                إرسال التفعيل
+                            </span>
+                            <span class="act-submit-glow"></span>
+                        </button>
+                        <p class="act-submit-note"><i class="fas fa-lock"></i> بياناتك محمية وسيتم مراجعتها بسرية</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success-modal-content">
+            <div class="success-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>تم بنجاح!</h3>
+                <p>تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.</p>
+                <button class="btn btn-primary" id="successCloseBtn">موافق</button>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import { db, doc, onSnapshot, collection, query, orderBy } from './admin.js';
+
+        // 1. كود القوانين والأزرار (المحدث للتحكم في البطاقات والمودال معاً)
+        onSnapshot(doc(db, "settings", "siteConfig"), (snap) => {
+            if (snap.exists()) {
+                const data = snap.data();
+                const fmt = (text) => {
+                    if (!text) return "<li>قريباً...</li>";
+                    return text.split('\n').filter(line => line.trim() !== "").map(line => `<li>${line}</li>`).join('');
+                };
+
+                const generalList = document.getElementById('rulesGeneralList');
+                const greenZoneList = document.getElementById('rulesGreenZoneList');
+                const heistList = document.getElementById('rulesHeistList');
+                const shootoutList = document.getElementById('rulesShootoutList');
+
+                if (generalList) generalList.innerHTML = fmt(data.rulesGeneral);
+                if (greenZoneList) greenZoneList.innerHTML = fmt(data.rulesGreenZone);
+                if (heistList) heistList.innerHTML = fmt(data.rulesHeist);
+                if (shootoutList) shootoutList.innerHTML = fmt(data.rulesShootout);
+
+                // --- الوظيفة المحدثة لإظهار الرسالة فوق التغبيش ---
+                const applyConfig = (type, status, selector, contentId, text, customMsg) => {
+                    const btn = document.querySelector(selector);
+                    const content = document.getElementById(contentId);
+                    const card = btn ? btn.closest('.join-card, .transfer-card') : null;
+
+                    // إزالة أي رسائل قفل قديمة
+                    if (card) card.parentElement.querySelectorAll('.transfer-closed-message').forEach(m => m.remove());
+                    if (content) content.querySelectorAll('.transfer-closed-message').forEach(m => m.remove());
+
+                    if (status === 'closed') {
+                        // تأثير الإغلاق على البطاقة في الصفحة
+                        if (card) {
+                            card.style.filter = 'blur(6px)';
+                            card.style.pointerEvents = 'none';
+                            card.style.opacity = '0.5';
+                            card.style.zIndex = '5';
+
+                            const closedHTML = `
                                     <div class="transfer-closed-message" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20; min-width: 280px; text-align: center; pointer-events: none;">
                                         <div class="transfer-icon"><i class="fas fa-lock" style="font-size: 40px; color: #ff9800;"></i></div>
                                         <h3 style="color: white; margin-top: 10px;">${type === 'transfer' ? 'النقل' : 'التقديم'} مغلق حالياً</h3>
                                     </div>`;
-                                card.parentElement.style.position = 'relative';
-                                card.parentElement.insertAdjacentHTML('beforeend', closedHTML);
-                            }
+                            card.parentElement.style.position = 'relative';
+                            card.parentElement.insertAdjacentHTML('beforeend', closedHTML);
+                        }
 
-                            // تأثير الإغلاق داخل المودال (الرسالة فوق التغبيش)
-                            if (content) {
-                                content.style.position = 'relative';
-                                content.style.minHeight = '300px';
+                        // تأثير الإغلاق داخل المودال (الرسالة فوق التغبيش)
+                        if (content) {
+                            content.style.position = 'relative';
+                            content.style.minHeight = '300px';
 
-                                // تغبيش العناصر الداخلية فقط (باستثناء الرسالة نفسها)
-                                Array.from(content.children).forEach(child => {
-                                    child.style.filter = 'blur(10px)';
-                                    child.style.pointerEvents = 'none';
-                                });
+                            // تغبيش العناصر الداخلية فقط (باستثناء الرسالة نفسها)
+                            Array.from(content.children).forEach(child => {
+                                child.style.filter = 'blur(10px)';
+                                child.style.pointerEvents = 'none';
+                            });
 
-                                const modalClosedHTML = `
+                            const modalClosedHTML = `
                                     <div class="transfer-closed-message" style="
                                         position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
                                         background: rgba(0,0,0,0.4); display: flex; flex-direction: column; 
@@ -2755,55 +4204,55 @@
                                         <h3 style="color: white; font-weight: bold; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">عذراً، هذا القسم مغلق</h3>
                                         <p style="color: rgba(255,255,255,0.8);">يرجى المحاولة في وقت لاحق</p>
                                     </div>`;
-                                
-                                content.insertAdjacentHTML('beforeend', modalClosedHTML);
-                            }
-                        } else {
-                            // إعادة الحالة للطبيعية
-                            if (card) {
-                                card.style.filter = 'none';
-                                card.style.pointerEvents = 'auto';
-                                card.style.opacity = '1';
-                            }
-                            if (content) {
-                                Array.from(content.children).forEach(child => {
-                                    child.style.filter = 'none';
-                                    child.style.pointerEvents = 'auto';
-                                });
-                                content.style.filter = 'none';
-                                content.style.pointerEvents = 'auto';
-                            }
-                            if (btn) {
-                                btn.innerHTML = text;
-                                btn.onclick = () => {
-                                    if(customMsg) alert(customMsg);
-                                    if(typeof openModal === "function") openModal('applicationModal');
-                                    const tabBtn = document.querySelector(`.tab-btn[data-tab="${type === 'transfer' ? 'transfer' : 'apply'}"]`);
-                                    if(tabBtn) tabBtn.click();
-                                };
-                            }
+
+                            content.insertAdjacentHTML('beforeend', modalClosedHTML);
                         }
-                    };
+                    } else {
+                        // إعادة الحالة للطبيعية
+                        if (card) {
+                            card.style.filter = 'none';
+                            card.style.pointerEvents = 'auto';
+                            card.style.opacity = '1';
+                        }
+                        if (content) {
+                            Array.from(content.children).forEach(child => {
+                                child.style.filter = 'none';
+                                child.style.pointerEvents = 'auto';
+                            });
+                            content.style.filter = 'none';
+                            content.style.pointerEvents = 'auto';
+                        }
+                        if (btn) {
+                            btn.innerHTML = text;
+                            btn.onclick = () => {
+                                if (customMsg) alert(customMsg);
+                                if (typeof openModal === "function") openModal('applicationModal');
+                                const tabBtn = document.querySelector(`.tab-btn[data-tab="${type === 'transfer' ? 'transfer' : 'apply'}"]`);
+                                if (tabBtn) tabBtn.click();
+                            };
+                        }
+                    }
+                };
 
-                    // تشغيل التحديثات بناءً على بيانات Firebase
-                    applyConfig('apply', data.adminApp, 'button[onclick*="adminModal"]', 'apply-content', 'تقديم إدارة', null);
-                    applyConfig('transfer', data.transferApp, 'button[onclick*="transferModal"]', 'transfer-content', 'نقل إداري', data.transferMessage);
-                }
-            });
+                // تشغيل التحديثات بناءً على بيانات Firebase
+                applyConfig('apply', data.adminApp, 'button[onclick*="adminModal"]', 'apply-content', 'تقديم إدارة', null);
+                applyConfig('transfer', data.transferApp, 'button[onclick*="transferModal"]', 'transfer-content', 'نقل إداري', data.transferMessage);
+            }
+        });
 
-            // 2. كود الفريق (بدون تغيير)
-            onSnapshot(query(collection(db, "teamMembers"), orderBy("createdAt", "asc")), (snap) => {
-                const ownersGrid = document.getElementById('owners-grid');
-                const ceosGrid = document.getElementById('ceos-grid');
-                const devsGrid = document.getElementById('devs-grid');
+        // 2. كود الفريق (بدون تغيير)
+        onSnapshot(query(collection(db, "teamMembers"), orderBy("createdAt", "asc")), (snap) => {
+            const ownersGrid = document.getElementById('owners-grid');
+            const ceosGrid = document.getElementById('ceos-grid');
+            const devsGrid = document.getElementById('devs-grid');
 
-                if(ownersGrid) ownersGrid.innerHTML = '';
-                if(ceosGrid) ceosGrid.innerHTML = '';
-                if(devsGrid) devsGrid.innerHTML = '';
+            if (ownersGrid) ownersGrid.innerHTML = '';
+            if (ceosGrid) ceosGrid.innerHTML = '';
+            if (devsGrid) devsGrid.innerHTML = '';
 
-                snap.forEach((doc) => {
-                    const member = doc.data();
-                    const memberHTML = `
+            snap.forEach((doc) => {
+                const member = doc.data();
+                const memberHTML = `
                         <div class="admin-card">
                             <div class="admin-image-wrapper">
                                 <div class="admin-image-border"></div>
@@ -2821,24 +4270,24 @@
                         </div>
                     `;
 
-                    if (member.category === 'owners' && ownersGrid) ownersGrid.innerHTML += memberHTML;
-                    else if (member.category === 'ceos' && ceosGrid) ceosGrid.innerHTML += memberHTML;
-                    else if (member.category === 'devs' && devsGrid) devsGrid.innerHTML += memberHTML;
-                });
+                if (member.category === 'owners' && ownersGrid) ownersGrid.innerHTML += memberHTML;
+                else if (member.category === 'ceos' && ceosGrid) ceosGrid.innerHTML += memberHTML;
+                else if (member.category === 'devs' && devsGrid) devsGrid.innerHTML += memberHTML;
             });
+        });
 
-            // كود تبديل التبويبات (بدون تغيير)
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    btn.classList.add('active');
-                    const tabId = btn.getAttribute('data-tab') + '-content';
-                    const targetContent = document.getElementById(tabId);
-                    if(targetContent) targetContent.classList.add('active');
-                });
+        // كود تبديل التبويبات (بدون تغيير)
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab') + '-content';
+                const targetContent = document.getElementById(tabId);
+                if (targetContent) targetContent.classList.add('active');
             });
-        </script>
+        });
+    </script>
 </body>
 
 </html>

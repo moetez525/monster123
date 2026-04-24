@@ -393,20 +393,250 @@
             font-size: 0.7rem;
         }
 
-        /* للهواتف */
-        @media (max-width: 480px) {
+        /* للأجهزة المتوسطة (تابلت صغير) */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+                align-items: flex-start;
+                padding-top: 5vh;
+                overflow-y: auto;
+            }
+
+            .login-wrapper {
+                width: 95%;
+                max-width: 420px;
+            }
+
             .login-card {
-                padding: 40px 28px 32px;
-                border-radius: 22px;
+                padding: 40px 30px 32px;
+                border-radius: 24px;
             }
 
             .login-title h2 {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* للهواتف */
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+                padding-top: 3vh;
+                align-items: flex-start;
+                overflow-y: auto;
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
+            }
+
+            .login-wrapper {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .login-card {
+                padding: 32px 22px 28px;
+                border-radius: 20px;
+                box-shadow:
+                    0 20px 50px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(255, 255, 255, 0.03),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            }
+
+            .login-card::before {
+                width: 140px;
+                height: 140px;
+            }
+
+            .login-card::after {
+                width: 100px;
+                height: 100px;
+            }
+
+            .login-logo {
+                margin-bottom: 6px;
             }
 
             .login-logo img {
-                width: 70px;
-                height: 70px;
+                width: 65px;
+                height: 65px;
+            }
+
+            .login-title h2 {
+                font-size: 1.35rem;
+                letter-spacing: -0.3px;
+            }
+
+            .login-subtitle {
+                font-size: 0.82rem;
+                margin-bottom: 26px;
+            }
+
+            .input-wrapper {
+                margin-bottom: 16px;
+            }
+
+            .input-wrapper input {
+                padding: 14px 44px 14px 16px;
+                font-size: 0.92rem;
+                border-radius: 12px;
+                /* Prevent zoom on iOS */
+                font-size: 16px;
+            }
+
+            .input-wrapper > i {
+                right: 14px;
+                font-size: 0.9rem;
+            }
+
+            .toggle-password {
+                left: 12px;
+                padding: 8px;
+                font-size: 0.95rem;
+                /* Minimum 44px tap target */
+                min-width: 44px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .input-wrapper.has-toggle input {
+                padding-left: 44px;
+            }
+
+            .login-btn {
+                padding: 14px;
+                font-size: 1rem;
+                border-radius: 12px;
+                margin-top: 22px;
+                box-shadow: 0 8px 22px rgba(220, 38, 38, 0.25);
+                /* Minimum 44px tap target */
+                min-height: 50px;
+            }
+
+            .login-btn:hover {
+                transform: none;
+            }
+
+            .login-btn:active {
+                transform: scale(0.98);
+                box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+            }
+
+            .error-message {
+                padding: 10px 14px;
+                font-size: 0.82rem;
+                border-radius: 10px;
+            }
+
+            .login-footer {
+                margin-top: 22px;
+                padding-top: 16px;
+                font-size: 0.72rem;
+            }
+
+            .login-footer i {
+                font-size: 0.65rem;
+            }
+        }
+
+        /* هواتف صغيرة جداً */
+        @media (max-width: 360px) {
+            body {
+                padding: 8px;
+                padding-top: 2vh;
+            }
+
+            .login-card {
+                padding: 26px 18px 24px;
+                border-radius: 18px;
+            }
+
+            .login-logo img {
+                width: 55px;
+                height: 55px;
+            }
+
+            .login-title h2 {
+                font-size: 1.2rem;
+            }
+
+            .login-subtitle {
+                font-size: 0.78rem;
+                margin-bottom: 20px;
+            }
+
+            .input-wrapper input {
+                padding: 12px 40px 12px 14px;
+            }
+
+            .login-btn {
+                padding: 13px;
+                margin-top: 18px;
+            }
+        }
+
+        /* عرض أفقي للهاتف */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 10px 20px;
+                align-items: flex-start;
+                overflow-y: auto;
+            }
+
+            .login-wrapper {
+                max-width: 400px;
+            }
+
+            .login-card {
+                padding: 20px 28px;
+            }
+
+            .login-logo {
+                margin-bottom: 4px;
+            }
+
+            .login-logo img {
+                width: 45px;
+                height: 45px;
+            }
+
+            .login-title h2 {
+                font-size: 1.2rem;
+            }
+
+            .login-subtitle {
+                margin-bottom: 16px;
+                font-size: 0.78rem;
+            }
+
+            .input-wrapper {
+                margin-bottom: 12px;
+            }
+
+            .input-wrapper input {
+                padding: 10px 42px 10px 14px;
+            }
+
+            .login-btn {
+                padding: 11px;
+                margin-top: 14px;
+            }
+
+            .login-footer {
+                margin-top: 14px;
+                padding-top: 12px;
+            }
+        }
+
+        /* دعم المساحة الآمنة للهواتف ذات النوتش */
+        @supports (padding: max(0px)) {
+            @media (max-width: 480px) {
+                body {
+                    padding-left: max(12px, env(safe-area-inset-left));
+                    padding-right: max(12px, env(safe-area-inset-right));
+                    padding-bottom: max(12px, env(safe-area-inset-bottom));
+                }
             }
         }
 

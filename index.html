@@ -3154,13 +3154,7 @@
 
             <div class="admins-grid" id="owners-grid">
             </div>
-            <!-- WEB DEVLOPPER -->
-
-            <h3 class="section-title" style="font-size: 42px; margin-top: 50px;">فريق المؤسسين </h3>
-            <p class="section-subtitle">تعرف على رؤساءنا التنفيذيين المسؤولين عن إدارة وتوجيه السيرفر.</p>
-            <div class="admins-grid" id="ceos-grid">
-            </div>
-
+            <!-- DEVLOPPER -->
             <h3 class="section-title" style="font-size: 42px; margin-top: 50px;">فريق البرمجة</h3>
             <p class="section-subtitle">تعرف على فريق البرمجة المسؤول عن تطوير السيرفر وتجربة اللعب.</p>
             <div class="admins-grid" id="devs-grid">
@@ -4243,7 +4237,6 @@
         // 2. كود الفريق (بدون تغيير)
         onSnapshot(query(collection(db, "teamMembers"), orderBy("createdAt", "asc")), (snap) => {
             const ownersGrid = document.getElementById('owners-grid');
-            const ceosGrid = document.getElementById('ceos-grid');
             const devsGrid = document.getElementById('devs-grid');
 
             if (ownersGrid) ownersGrid.innerHTML = '';

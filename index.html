@@ -4237,6 +4237,7 @@
         // 2. كود الفريق (بدون تغيير)
         onSnapshot(query(collection(db, "teamMembers"), orderBy("createdAt", "asc")), (snap) => {
             const ownersGrid = document.getElementById('owners-grid');
+            const ceosGrid = document.getElementById('ceos-grid');
             const devsGrid = document.getElementById('devs-grid');
 
             if (ownersGrid) ownersGrid.innerHTML = '';
